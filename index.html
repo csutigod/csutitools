@@ -151,7 +151,7 @@ body[data-site="green"] #page2{animation:pg .4s ease}
 .stat .v:empty::before,.tile .v:empty::before{content:"0"}
 .ico.hl{color:#ff3b4a}.ico.as{color:#22c55e}
 body[data-site="see"]::before{background:radial-gradient(900px 420px at 50% -140px,rgba(240,200,80,.14),transparent 70%),linear-gradient(160deg,rgba(0,0,0,0) 28%,rgba(240,200,80,.07) 62%,rgba(240,200,80,.22) 100%)}
-body[data-site="green"]::before{background:radial-gradient(900px 420px at 50% -140px,rgba(var(--bgc2,59,221,206),calc(.14*var(--bgi,1))),transparent 70%),linear-gradient(160deg,rgba(0,0,0,0) 28%,rgba(var(--bgc2,59,221,206),calc(.07*var(--bgi,1))) 62%,rgba(var(--bgc2,59,221,206),calc(.22*var(--bgi,1))) 100%)}
+body[data-site="green"]::before{background:radial-gradient(900px 420px at 50% -140px,rgba(var(--bgc2,59,221,206),calc(.14*var(--bgi2,1))),transparent 70%),linear-gradient(160deg,rgba(0,0,0,0) 28%,rgba(var(--bgc2,59,221,206),calc(.07*var(--bgi2,1))) 62%,rgba(var(--bgc2,59,221,206),calc(.22*var(--bgi2,1))) 100%)}
 .book{position:relative;margin-top:20px;height:168px;perspective:1600px;transition:height .55s cubic-bezier(.2,.8,.2,1)}
 .bk-page{position:absolute;inset:0;border:1px solid var(--line);border-left:6px solid rgba(var(--acc),.55);border-radius:6px 14px 14px 6px;background:linear-gradient(180deg,#181818,#101010);overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(var(--acc),.55) transparent;box-shadow:0 10px 40px rgba(0,0,0,.5)}
 .bk-in{padding:14px 14px 16px}
@@ -603,11 +603,152 @@ button.rptab.rpb[hidden]{display:none}
 .tp.e .n{color:#6f7882;font-weight:500}
 @media(max-width:700px){.rptop-r{grid-template-columns:1fr}}
 @media(max-width:700px){.rpwin{height:100%}button.rptab.rpb{padding:10px 12px;font-size:.85rem}.rb-t{display:none}button.rpbtn{padding:0 4px}}
+/* ===== Felső sáv: bal oldalt háttérválasztó + SeeNews, jobb felső sarokban a changelog ===== */
+.tb-l{display:flex;align-items:center;gap:10px}
+body[data-site="green"] .bgpick,body[data-site="news"][data-from="green"] .bgpick{--bgc:var(--bgc2)}
+/* SeeNews: a szín annak az oldalnak a színe, ahonnan megnyitották */
+body[data-site="news"][data-from="green"]{--accent:#3bddce;--acc:59,221,206}
+body[data-site="news"][data-from="green"]::before{background:radial-gradient(900px 420px at 50% -140px,rgba(var(--bgc2,59,221,206),calc(.14*var(--bgi2,1))),transparent 70%),linear-gradient(160deg,rgba(0,0,0,0) 28%,rgba(var(--bgc2,59,221,206),calc(.07*var(--bgi2,1))) 62%,rgba(var(--bgc2,59,221,206),calc(.22*var(--bgi2,1))) 100%)}
+
+/* ===== Bal oldali lista-panel (Reports) ===== */
+.lpanel{position:fixed;left:14px;top:120px;z-index:35;width:190px;padding:10px;border:1px solid var(--line);border-radius:16px;background:rgba(18,18,18,.78);backdrop-filter:blur(10px);box-shadow:0 14px 40px rgba(0,0,0,.45)}
+.lp-h{margin:0 4px 8px;color:var(--muted);font-size:.66rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+button.lpitem{position:relative;display:flex;align-items:center;gap:10px;width:100%;margin:0;padding:7px 10px 7px 7px;border-radius:11px;border:1px solid transparent;background:transparent;box-shadow:none;color:var(--text);font-size:.9rem;font-weight:800;letter-spacing:0;text-align:left;text-transform:none}
+button.lpitem:hover:not(:disabled),button.lpitem:focus-visible,button.lpitem[aria-expanded="true"]{transform:none;box-shadow:none;border-color:rgba(var(--acc),.45);background:rgba(var(--acc),.1);outline:none}
+.lp-ico{flex:none;display:grid;place-items:center;width:32px;height:32px;border-radius:9px;background:rgba(var(--acc),.14);color:var(--accent);transition:transform .35s cubic-bezier(.3,1.4,.4,1)}
+.lp-ico svg{width:18px;height:18px}
+button.lpitem:hover .lp-ico,button.lpitem:focus-visible .lp-ico{transform:rotate(-10deg) scale(1.08)}
+.lpitem .cldot{position:absolute;top:7px;right:9px}
+@media(min-width:1040px) and (max-width:1599px){.lpanel{left:8px;width:auto;padding:6px}.lp-h,.lp-t{display:none}button.lpitem{padding:5px}.lpitem .cldot{top:2px;right:2px}}
+@media(min-width:1040px) and (max-width:1340px){main{padding-left:66px}}
+@media(max-width:1039px){.lpanel{position:static;display:flex;align-items:center;gap:8px;width:auto;margin:0 0 14px;padding:6px 8px}.lp-h{margin:0 6px 0 4px}button.lpitem{width:auto}}
+
+/* ===== Űrlap: név mentése, logmappa, dátumszűrő ===== */
+.lbrow{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px}
+.lbrow label[for]{margin:0}
+label.ck{position:relative;display:inline-flex;align-items:center;gap:7px;margin:0;color:var(--muted);font-size:.78rem;font-weight:700;letter-spacing:.02em;text-transform:none;cursor:pointer;user-select:none;transition:color .2s}
+.ck input{position:absolute;opacity:0;width:0;height:0}
+.ck i{position:relative;flex:none;width:17px;height:17px;border-radius:5px;border:1px solid #3a3a3a;background:var(--card2);transition:border-color .2s,background .2s}
+.ck i::after{content:"";position:absolute;left:5px;top:1.5px;width:4px;height:9px;border:solid var(--accent-ink);border-width:0 2px 2px 0;transform:rotate(45deg) scale(0);transition:transform .2s cubic-bezier(.3,1.5,.4,1)}
+.ck input:checked+i{border-color:var(--accent);background:var(--accent)}
+.ck input:checked+i::after{transform:rotate(45deg) scale(1)}
+.ck:hover i,.ck input:focus-visible+i{border-color:var(--accent)}
+.ck:has(input:checked){color:var(--text)}
+.src{margin-top:14px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--card2)}
+.srcrow{display:flex;align-items:center;gap:12px}
+.srcico{flex:none;display:grid;place-items:center;width:36px;height:36px;border-radius:10px;background:rgba(var(--acc),.12);color:var(--accent)}
+.srcico svg{width:19px;height:19px}
+.srctxt{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.3}
+.srctxt b{overflow:hidden;font-size:.92rem;white-space:nowrap;text-overflow:ellipsis}
+.srctxt small{overflow:hidden;color:var(--muted);font-size:.74rem;white-space:nowrap;text-overflow:ellipsis}
+.src:not(.set) .srctxt b{color:var(--muted)}
+button.srcbtn{flex:none;width:auto;margin:0;padding:8px 13px;border-radius:9px;border:1px solid rgba(var(--acc),.55);background:transparent;box-shadow:none;color:var(--accent);font-size:.78rem;font-weight:800;letter-spacing:.02em;text-transform:none}
+button.srcbtn:hover:not(:disabled),button.srcbtn:focus-visible{transform:none;background:rgba(var(--acc),.1);box-shadow:0 0 14px rgba(var(--acc),.25)}
+.src:not(.set) button.srcbtn{background:var(--accent);color:var(--accent-ink)}
+.srcbtns{flex:none;display:flex;gap:6px}
+.src:not(.set) button.srcbtn.alt,button.srcbtn.alt{background:transparent;color:var(--accent);border-color:rgba(var(--acc),.4)}
+.srctxt small.bad{color:#ff6b5e}
+.srctxt small.ok{color:#9be3a7}
+.dfrow{display:flex;align-items:center;flex-wrap:wrap;gap:8px 14px;margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
+.dfin{flex:1;display:flex;align-items:center;gap:8px;min-width:250px;transition:opacity .2s}
+.dfin.off{opacity:.4;pointer-events:none}
+label.dbox{flex:1;display:flex;align-items:center;gap:8px;height:36px;margin:0;padding:0 10px;border:1px solid var(--line);border-radius:9px;background:var(--card);color:var(--muted);letter-spacing:0;text-transform:none;cursor:text;transition:border-color .2s}
+.dbox:focus-within{border-color:var(--accent)}
+.dbox svg{flex:none;width:15px;height:15px;color:var(--accent)}
+.dbox input{flex:1;min-width:0;padding:0;border:0;outline:none;background:transparent;color:var(--text);font:inherit;font-size:.88rem;font-weight:700;color-scheme:dark}
+.dsep{color:var(--muted)}
+#formCard .frow,#page2 .frow{margin-top:10px}
+
+/* ===== Daily Stats: napi kártyák vízszintes sávban (elemzés után, a fizetések alatt) ===== */
+.dsc{padding:12px 16px}
+.ds-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.ds-head .ph{margin:0!important;font-size:.95rem}
+.ds-nav{display:flex;gap:6px;margin-left:auto}
+button.dsn{display:grid;place-items:center;width:30px;height:30px;margin:0;padding:0;border-radius:9px;border:1px solid var(--line);background:var(--card2);box-shadow:none;color:var(--text);font-size:1.15rem;line-height:1;text-transform:none;letter-spacing:0}
+button.dsn:hover:not(:disabled),button.dsn:focus-visible{transform:none;box-shadow:none;border-color:var(--accent);color:var(--accent)}
+.ds-row{display:flex;gap:10px;overflow-x:auto;padding:2px 2px 8px;scroll-snap-type:x proximity;scrollbar-width:thin;scrollbar-color:rgba(var(--acc),.5) transparent}
+.ds-row .day{flex:0 0 118px;height:104px;scroll-snap-align:end}
+.ds-row .front{gap:0;background:linear-gradient(180deg,#1d1d1d,#141414)}
+.front .wd{color:var(--muted);font-size:.64rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+.ds-row .front .dn{font-size:1.9rem}
+.ds-row .front .mo{margin-bottom:8px;font-size:.64rem}
+.dbar{position:absolute;left:12px;right:12px;bottom:10px;height:4px;overflow:hidden;border-radius:3px;background:rgba(255,255,255,.14)}
+.dbar i{display:block;height:100%;border-radius:3px;background:#f0c850}
+.ds-row .back .dd b{font-size:1.05rem}
+
+/* ===== Értesítések jobb felül ===== */
+.toasts{position:fixed;top:58px;right:max(14px,env(safe-area-inset-right,0px));z-index:90;display:flex;flex-direction:column;gap:8px;width:min(320px,calc(100vw - 28px));pointer-events:none}
+.toast{display:flex;align-items:flex-start;gap:10px;padding:10px 8px 10px 12px;border:1px solid rgba(var(--acc),.45);border-radius:14px;background:rgba(20,20,20,.96);backdrop-filter:blur(12px);box-shadow:0 14px 40px rgba(0,0,0,.55);opacity:0;transform:translateX(24px);pointer-events:auto;transition:opacity .3s,transform .4s cubic-bezier(.2,.8,.2,1)}
+.toast.in{opacity:1;transform:none}
+.to-ico{flex:none;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;border:1px solid #262626;background:#050505;color:#ee4a40}
+.toast.news .to-ico{color:var(--accent)}
+.to-ico svg{width:17px;height:17px}
+button.to-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;margin:0;padding:0;border:0;background:none;box-shadow:none;color:var(--text);font-size:.8rem;font-weight:500;line-height:1.35;letter-spacing:0;text-align:left;text-transform:none}
+button.to-body:hover:not(:disabled){transform:none;box-shadow:none}
+.to-body b{color:var(--accent);font-size:.74rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.to-body span{display:-webkit-box;overflow:hidden;color:#d8d8d4;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+button.to-x{flex:none;display:grid;place-items:center;width:26px;height:26px;margin:0;padding:0;border:0;border-radius:8px;background:transparent;box-shadow:none;color:var(--muted);font-size:1.2rem;line-height:1}
+button.to-x:hover:not(:disabled),button.to-x:focus-visible{transform:none;box-shadow:none;background:#262626;color:var(--text)}
+
+/* ===== Bal alul: info gomb + eddigi látogatók ===== */
+.info{display:flex;align-items:center;gap:8px}
+.visits{display:flex;align-items:center;gap:6px;height:30px;padding:0 11px;border:1px solid var(--line);border-radius:999px;background:rgba(14,14,14,.74);backdrop-filter:blur(8px);color:#cfcfca;font-size:.74rem;font-weight:700;pointer-events:none;user-select:none}
+.visits svg{width:15px;height:15px;color:var(--accent)}
+.visits b{color:var(--text);font-variant-numeric:tabular-nums}
+@media(max-width:560px){.visits span{display:none}}
+/* a betöltött fájlok listája helyett a mappa sorában látszik, hány log töltődött be */
+.page .frow{display:none!important}
+/* asztali nézet: a dátumszűrő a mappa sorában, elemzés után kisebb logó, tömörebb napi kártyák */
+@media(min-width:1040px) and (min-height:560px){
+.dfrow{margin-top:8px;padding-top:8px}
+.dfin{flex:none;margin-left:auto;min-width:0}
+label.dbox{flex:none;width:180px;height:32px}
+.page .hero img{transition:height .45s cubic-bezier(.2,.8,.2,1)}
+.page.done .hero img{height:clamp(48px,7vh,110px)}
+.page.done .hero{margin-bottom:clamp(4px,1vh,14px)}
+.ds-row .day{height:92px}
+.ds-row .front .dn{font-size:1.65rem}
+.ds-head{margin-bottom:8px}
+}
+
+/* ===== Saját dátumválasztó (csak logos napok) ===== */
+.dfin{position:relative}
+button.dchip{flex:none;display:inline-flex;align-items:center;gap:9px;width:auto;min-width:156px;height:34px;margin:0;padding:0 13px;border:1px solid var(--line);border-radius:10px;background:var(--card);box-shadow:none;color:var(--text);font-size:.86rem;font-weight:800;letter-spacing:.02em;text-transform:none;font-variant-numeric:tabular-nums;transition:border-color .2s,box-shadow .2s}
+button.dchip svg{width:15px;height:15px;color:var(--accent)}
+button.dchip:hover:not(:disabled),button.dchip:focus-visible,button.dchip.on{transform:none;border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 0 16px rgba(var(--acc),.2);outline:none}
+.dpop{position:absolute;right:0;top:calc(100% + 8px);z-index:60;width:304px;padding:12px;border:1px solid var(--line);border-radius:16px;background:rgba(20,20,20,.98);backdrop-filter:blur(12px);box-shadow:0 18px 50px rgba(0,0,0,.65);opacity:0;visibility:hidden;transform:translateY(-6px) scale(.97);transform-origin:top right;transition:opacity .2s,transform .28s cubic-bezier(.2,.8,.2,1),visibility 0s .28s}
+.dpop.open{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+.dp-h{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.dp-t{text-align:center;font-size:.95rem;font-weight:900;line-height:1.2}
+.dp-t small{display:block;margin-top:2px;color:var(--muted);font-size:.68rem;font-weight:700}
+button.dp-nav{display:grid;place-items:center;width:32px;height:32px;margin:0;padding:0;border:1px solid var(--line);border-radius:9px;background:var(--card2);box-shadow:none;color:var(--text);font-size:1.15rem;line-height:1;text-transform:none;letter-spacing:0}
+button.dp-nav:hover:not(:disabled),button.dp-nav:focus-visible{transform:none;box-shadow:none;border-color:var(--accent);color:var(--accent)}
+button.dp-nav:disabled{opacity:.25}
+.dp-w,.dp-g{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.dp-w span{padding:4px 0;color:var(--muted);font-size:.66rem;font-weight:800;text-align:center}
+.dp-d{position:relative;display:grid;place-items:center;height:36px}
+button.dp-d{width:auto;margin:0;padding:0;border:0;border-radius:9px;background:transparent;box-shadow:none;color:var(--text);font-size:.85rem;font-weight:700;letter-spacing:0;text-transform:none;font-variant-numeric:tabular-nums;transition:background .15s}
+button.dp-d.has::after{content:"";position:absolute;left:50%;bottom:4px;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--accent)}
+button.dp-d:hover:not(:disabled),button.dp-d:focus-visible{transform:none;box-shadow:none;background:rgba(var(--acc),.16);outline:none}
+button.dp-d:disabled{opacity:1;color:#4b4b48;cursor:default}
+button.dp-d.inr{border-radius:4px;background:rgba(var(--acc),.12)}
+button.dp-d.end{background:var(--accent);color:var(--accent-ink)}
+button.dp-d.end::after{background:var(--accent-ink)}
+button.dp-d.today:not(.end){box-shadow:inset 0 0 0 1px rgba(255,255,255,.28)}
+.dp-f{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
+button.dp-q{width:auto;margin:0;padding:5px 10px;border:1px solid var(--line);border-radius:8px;background:transparent;box-shadow:none;color:#cfcfca;font-size:.72rem;font-weight:800;letter-spacing:.02em;text-transform:none}
+button.dp-q:hover:not(:disabled),button.dp-q:focus-visible{transform:none;box-shadow:none;border-color:var(--accent);color:var(--text)}
+.dp-note{margin:8px 2px 0;color:var(--muted);font-size:.7rem;line-height:1.4}
+/* elemzés közben a gomb jelzi a betöltést */
+button.gobtn.busy{opacity:.75;cursor:progress}
+@media(max-width:600px){.dfin{flex-wrap:wrap}button.dchip{flex:1;min-width:0}.dpop{left:0;right:auto;width:min(304px,calc(100vw - 48px))}}
+
 </style>
 </head>
 <body data-site="see">
 <main>
 <div class="topbar">
+<div class="tb-l">
 <div class="bgpick" id="bgpick">
 <button class="tbtn bgbtn" id="bgBtn" type="button" title="Háttér testreszabása" aria-label="Háttér testreszabása" aria-haspopup="dialog" aria-expanded="false" aria-controls="bgPop"><span class="bgsw"></span><svg class="brush" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9.06 11.9 8.07-8.06a2.85 2.85 0 1 1 4.03 4.03l-8.06 8.08"/><path d="M7.07 14.94c-1.66 0-3 1.35-3 3.02 0 1.33-2.5 1.52-2 2.02 1.08 1.1 2.49 2.02 4 2.02 2.2 0 4-1.8 4-4.04a3.01 3.01 0 0 0-3-3.02z"/></svg></button>
 <div class="bgpop" id="bgPop" role="dialog" aria-label="Háttér testreszabása">
@@ -621,16 +762,16 @@ button.rptab.rpb[hidden]{display:none}
 <button class="tbtn bgreset" id="bgReset" type="button">Alaphelyzet</button>
 </div>
 </div>
-<div class="tb-r">
-<button class="tbtn rpbtn" id="rpBtn" type="button" title="Reports" aria-label="Reports" aria-haspopup="dialog" aria-expanded="false" aria-controls="rpModal"><span class="rb-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span><span class="rb-t" aria-hidden="true"><b><span>REPORTS</span></b></span><i class="cldot" id="rpDot"></i></button>
 <button class="tbtn newsbtn" id="newsBtn" type="button" title="SeeNews" aria-label="SeeNews"><span class="nb-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg></span><span class="nb-t" aria-hidden="true">See<b><span>NEWS</span></b></span><i class="cldot" id="newsDot"></i></button>
-<span class="tb-sep" aria-hidden="true"></span>
+</div>
+<div class="tb-r">
 <div class="cl" id="cl">
 <button class="tbtn clbtn" id="clBtn" type="button" aria-expanded="false" aria-controls="clPanel"><span>Changelog</span><i class="cldot" id="clDot"></i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
 <div class="clpanel" id="clPanel"><div class="clin"><div class="clscroll" id="clList"></div></div></div>
 </div>
 </div>
 </div>
+<nav class="lpanel" aria-label="Extrák"><div class="lp-h">Extrák</div><button class="lpitem" id="rpBtn" type="button" title="Reports" aria-haspopup="dialog" aria-expanded="false" aria-controls="rpModal"><span class="lp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span><span class="lp-t">Reports</span><i class="cldot" id="rpDot"></i></button></nav>
 <nav class="sites" aria-label="Oldalváltó"><span class="ind" id="ind"></span><button data-site="see" aria-pressed="true" aria-label="SeeRPG"><img id="tabSee" alt="SeeRPG"></button><button data-site="green" aria-pressed="false" aria-label="SeeMTA (OLDIE)"><img alt="Logó" src="data:image/png;base64,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"></button></nav>
 <div class="page" id="page">
 <header class="hero">
@@ -640,10 +781,14 @@ button.rptab.rpb[hidden]{display:none}
 </header>
 <div class="layout"><div class="left">
 <div class="card" id="formCard">
-<div><label for="nev">Admin neve</label><input type="text" id="nev" placeholder="Admin név" autocomplete="off"><div class="alvl hidden" id="alvl" aria-live="polite"></div></div>
-<div class="drop" id="drop"><b id="fn">Húzd ide a LOG fájlokat</b><br>vagy kattints a tallózáshoz (.log, .txt, több fájl is jöhet)</div>
-<input type="file" id="file" accept=".log,.txt,text/plain" multiple class="hidden">
-<div class="frow hidden" id="frow"><details id="fd"><summary>Feltöltött fájlok <b id="fc"></b></summary><div class="inner flist" id="flist"></div></details><button class="addf" id="addf" type="button" title="További LOG fájlok hozzáadása" aria-label="További LOG fájlok hozzáadása"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button></div>
+<div><div class="lbrow"><label for="nev">Admin neve</label><label class="ck" title="A név megmarad a következő látogatáskor is"><input type="checkbox" id="saveName"><i></i><span>Név mentése</span></label></div><input type="text" id="nev" placeholder="Admin név" autocomplete="off"><div class="alvl hidden" id="alvl" aria-live="polite"></div></div>
+<div class="src" id="src">
+<div class="srcrow"><span class="srcico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg></span><span class="srctxt"><b id="srcName">Nincs logmappa kiválasztva</b><small id="srcSub"></small></span><span class="srcbtns"><button class="srcbtn" id="srcBtn" type="button" title="A logs mappa kiválasztása – a böngésző megjegyzi, legközelebb nem kell újra kiválasztani">Mappa kiválasztása</button><button class="srcbtn alt" id="fileBtn" type="button" title="Logfájlok (.txt, .log) kiválasztása – itt a fájlok is látszanak, több is kijelölhető (Ctrl+A)">Fájlok</button></span></div>
+<div class="dfrow"><label class="ck"><input type="checkbox" id="dOn" checked><i></i><span>Szűkítés dátumra</span></label><div class="dfin" id="dfIn"><input type="hidden" id="dFrom"><input type="hidden" id="dTo"><button class="dchip" id="dFromBtn" type="button" aria-haspopup="dialog" aria-label="Kezdő nap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5"/><path d="M16 2.5v4M8 2.5v4M3 10h18"/></svg><span id="dFromTx"></span></button><span class="dsep">–</span><button class="dchip" id="dToBtn" type="button" aria-haspopup="dialog" aria-label="Záró nap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5"/><path d="M16 2.5v4M8 2.5v4M3 10h18"/></svg><span id="dToTx"></span></button><div class="dpop" id="dPop" role="dialog" aria-label="Dátum kiválasztása"></div></div></div>
+</div>
+<input type="file" id="dirIn" webkitdirectory multiple class="hidden">
+<input type="file" id="fileIn" multiple accept=".txt,.log,text/plain" class="hidden">
+<div class="frow hidden" id="frow"><details id="fd"><summary>Betöltött logok <b id="fc"></b></summary><div class="inner flist" id="flist"></div></details></div>
 <button id="go" class="gobtn" disabled>Elemzés</button>
 <div class="kdrow" id="kdrow"><span class="kdico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="7.5"/><path d="M12 2v5M12 17v5M2 12h5M17 12h5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></span><span class="kdtxt"><b>Kill / Death számolás</b><small class="kdsub">Kapcsold be, és add meg az InGame neved</small><input type="text" id="ign" class="kdign" placeholder="InGame név" autocomplete="off" aria-label="InGame név"></span><label class="switch" title="Kill / Death számolás"><input type="checkbox" id="kd" aria-label="Kill / Death számolás"><i></i></label></div>
 <p class="warn hidden" id="msg"></p>
@@ -664,10 +809,9 @@ button.rptab.rpb[hidden]{display:none}
 <div class="stat clk" role="button" tabindex="0" data-open="pay:all"><div class="k" data-l="pay3">Megérkezett fizetések</div><div class="v" id="p3"></div><div class="s">kattints az összes tételért</div></div>
 </div>
 <div class="card pn hidden" id="payP"><div class="wrap" style="padding:0"><table><thead><tr><th>Időpont</th><th>Logsor</th><th>Összeg</th></tr></thead><tbody id="prow"></tbody></table></div></div>
-<div class="card hmc" id="hmc">
-<div class="hm-head"><h2 class="ph">Aktív napok</h2><span class="hm-pill" title="Hány napon voltál online az évben"><b id="hmTotal">0</b> aktív nap</span><span class="hm-pill fire" title="A leghosszabb egymást követő online napok száma az évben">🔥 <b id="hmStreak">0</b> napos sorozat</span><div class="hm-years" id="hmYears"></div></div>
-<div class="hm" id="hm"></div>
-<div class="hm-foot"><span class="hm-lt">Kevesebb</span><span class="hm-li"><i></i>nem volt online</span><span class="hm-li"><i class="l1"></i>30 p alatt</span><span class="hm-li"><i class="l2"></i>30–90 p</span><span class="hm-li"><i class="l3"></i>1,5–3 ó</span><span class="hm-li"><i class="l4"></i>3 ó felett</span><span class="hm-lt">Több</span></div>
+<div class="card dsc" id="dsCard">
+<div class="ds-head"><h2 class="ph">Daily Stats</h2><span class="hm-pill"><b id="dsCount">0</b> aktív nap</span><div class="ds-nav"><button class="dsn" id="dsPrev" type="button" aria-label="Korábbi napok">‹</button><button class="dsn" id="dsNext" type="button" aria-label="Későbbi napok">›</button></div></div>
+<div class="ds-row" id="dayGrid"></div>
 </div>
 </div>
 </div>
@@ -692,16 +836,6 @@ button.rptab.rpb[hidden]{display:none}
 <div class="tile clk" role="button" tabindex="0" data-open="kd:death"><div class="ico dt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-4.4 0-8 3.1-8 7.2 0 2.3 1.1 4.2 2.8 5.5V19a1 1 0 001 1h8.4a1 1 0 001-1v-3.3c1.7-1.3 2.8-3.2 2.8-5.5C20 6.1 16.4 3 12 3z"/><circle cx="9" cy="11" r="1.6" fill="currentColor"/><circle cx="15" cy="11" r="1.6" fill="currentColor"/><path d="M10.5 20v-2M13.5 20v-2"/></svg></div><div><div class="v" id="cdt">0</div><div class="k">Death</div><div class="s" id="cdr"></div></div></div>
 </div>
 <div class="card pn hidden" id="kdP"><div id="kdl"></div></div></div>
-<p class="hint">Kattints egy csempére a részletes listához. A szankciók csak a megadott admin nevén szerepelnek.</p>
-<div class="book" id="book">
-<div class="bk-page"><div class="bk-in" id="bkIn">
-<div class="bk-head"><span>Daily Stats</span><small id="bkCount"></small><button class="bk-x" id="bkX" aria-label="Bezár">×</button></div>
-<div class="days" id="dayGrid"></div>
-</div></div>
-<div class="bk-cover" id="bkCover" role="button" tabindex="0" aria-label="Daily Stats kinyitása">
-<span class="bk-star"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12,2 14.9,8.9 22.4,9.6 16.7,14.5 18.5,21.9 12,18 5.5,21.9 7.3,14.5 1.6,9.6 9.1,8.9"/></svg></span><div class="bk-title">DAILY <br>STATS</div><div class="bk-hint">Kattints a kinyitáshoz</div>
-</div>
-</div>
 </aside>
 </div>
 </div>
@@ -737,9 +871,10 @@ button.rptab.rpb[hidden]{display:none}
 <aside class="rpside" aria-label="Top 3 rekord"><div class="rpsh"><span class="rptitle">TOP 3</span><small id="rpTopSrc"></small></div><div class="rpsb" id="rpTop"></div></aside>
 </div>
 </div>
+<div class="toasts" id="toasts" aria-live="polite"></div>
 <div class="stbar" id="stbar"><span class="st-brand">See<b id="stB">RPG</b></span><i>|</i><span id="stName">Vendég</span><i>|</i><span id="stTime"></span></div>
-<div class="info" id="info"><button class="infobtn" id="infoBtn" type="button" title="Információ" aria-label="Információ" aria-expanded="false" aria-controls="infoPanel">i</button>
-<div class="infopanel" id="infoPanel" role="dialog" aria-label="Információ"><div class="infoin"><div><div class="it" style="--i:0">Információ</div><p style="--i:1">A weboldal semmilyen kapcsolatban nincsen a SeeRPG hivatalos csapatával. Ez egy játékosok által készített hasznos funkciókat ellátó kalkulátor.</p><p style="--i:2">Az adatok semmilyen formában nem kerülnek tárolásra, mentésre.</p></div></div></div></div>
+<div class="info" id="info"><button class="infobtn" id="infoBtn" type="button" title="Információ" aria-label="Információ" aria-expanded="false" aria-controls="infoPanel">i</button><div class="visits" title="Az oldal eddigi látogatóinak száma"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg><span>Eddigi látogatók:</span><b id="visN">–</b></div>
+<div class="infopanel" id="infoPanel" role="dialog" aria-label="Információ"><div class="infoin"><div><div class="it" style="--i:0">Információ</div><p style="--i:1">A weboldal semmilyen kapcsolatban nincsen a SeeGame hivatalos csapatához. Ez egy játékosok által készített hasznos funkciókat ellátó kalkulátor.</p><p style="--i:2">Az adatok semmilyen formában nem kerülnek tárolásra, mentésre.</p></div></div></div></div>
 <script>
 const $=id=>document.getElementById(id);
 // 2. oldal (SeeMTA / OLDIE): ugyanaz a felület „g_” előtagú azonosítókkal, saját adatokkal és számolással
@@ -833,6 +968,12 @@ function rulesMTA(name,ip){
   };
 }
 
+// a kiválasztott logmappa (mappakezelő) megőrzése a böngészőben (IndexedDB), oldalanként
+const IDB=(()=>{let p=null;const open=()=>p||(p=new Promise((res,rej)=>{const r=indexedDB.open("seecalc",1);r.onupgradeneeded=()=>r.result.createObjectStore("h");r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)}));
+  const tx=(mode,fn)=>open().then(db=>new Promise((res,rej)=>{const t=db.transaction("h",mode),q=fn(t.objectStore("h"));t.oncomplete=()=>res(q&&q.result);t.onerror=()=>rej(t.error)}));
+  return {get:k=>tx("readonly",s=>s.get(k)),set:(k,v)=>tx("readwrite",s=>s.put(v,k))}})();
+const idbGet=k=>IDB.get(k).catch(()=>null),idbSet=(k,v)=>IDB.set(k,v).catch(()=>{});
+
 // ===== Egy kalkulátor példány: minden oldalnak saját fájljai, adatai és számolása van =====
 function initCalc(C){
   const root=C.root,$$=id=>document.getElementById(C.P+id);
@@ -840,20 +981,164 @@ function initCalc(C){
   root.querySelectorAll("[data-l]").forEach(el=>{const v=C.labels[el.dataset.l];if(v)el.textContent=v});
   root.style.setProperty("--hm",C.heat);
 
-  function check(){$$("go").disabled=!(files.length&&($$("nev").value.trim()||($$("kd").checked&&$$("ign").value.trim())))}
-  $$("drop").onclick=()=>$$("file").click();
-  $$("addf").onclick=()=>$$("file").click();
-  $$("file").onchange=e=>load(e.target.files);
-  // a fájlokat az egész űrlapkártyára rá lehet húzni
-  const fCard=$$("formCard"),dragOff=()=>{fCard.classList.remove("over");$$("drop").classList.remove("over")};
-  ["dragover","dragenter"].forEach(t=>fCard.addEventListener(t,e=>{e.preventDefault();fCard.classList.add("over");$$("drop").classList.add("over")}));
-  fCard.addEventListener("dragleave",e=>{if(!fCard.contains(e.relatedTarget))dragOff()});
-  fCard.addEventListener("drop",e=>{e.preventDefault();dragOff();load(e.dataTransfer.files)});
+  function check(){$$("go").disabled=!((files.length||hasSrc())&&($$("nev").value.trim()||($$("kd").checked&&$$("ign").value.trim())))}
+  // ===== Logforrás: a logmappát egyszer kell kiválasztani (a böngésző megjegyzi), a fájlnév dátuma alapján szűrünk =====
+  let dirH=null,dirFiles=null,dirLabel="",lastCount=null;
+  const hasSrc=()=>!!(dirH||dirFiles);
+  const isLog=n=>/\.(log|txt)$/i.test(n)||/^log/i.test(n);
+  const dateOf=n=>{const m=n.match(/(\d{4})-(\d{2})-(\d{2})/);return m?m[1]+"-"+m[2]+"-"+m[3]:null};
+  const today=()=>dk(new Date()),monthStart=()=>{const d=new Date();return dk(new Date(d.getFullYear(),d.getMonth(),1))};
+  // dátumszűrő: alapból a hónap 1. napjától máig; egy használat után az utolsó szűrés marad
+  try{const r=JSON.parse(localStorage.getItem(C.key+"-range")||"null");if(r){$$("dFrom").value=r.from||"";$$("dTo").value=r.to||"";$$("dOn").checked=r.on!==false}}catch(e){}
+  if(!$$("dFrom").value)$$("dFrom").value=monthStart();
+  if(!$$("dTo").value)$$("dTo").value=today();
+  const saveRange=()=>{try{localStorage.setItem(C.key+"-range",JSON.stringify({from:$$("dFrom").value,to:$$("dTo").value,on:$$("dOn").checked}))}catch(e){}};
+  // ===== Saját dátumválasztó: csak azok a napok választhatók, amelyekről van log =====
+  let avail=null,dpFor=null,dpMonth=null,dpDirty=false; // avail: a logos napok halmaza ("ÉÉÉÉ-HH-NN"), null = még nincs kiválasztott log
+  const MOL=["január","február","március","április","május","június","július","augusztus","szeptember","október","november","december"];
+  const fmtChip=v=>v?v.replace(/-/g,". ")+".":"–";
+  function dpChips(){$$("dFromTx").textContent=fmtChip($$("dFrom").value);$$("dToTx").textContent=fmtChip($$("dTo").value)}
+  function setAvail(names){avail=new Set(names.filter(isLog).map(dateOf).filter(Boolean));if(dpFor)dpRender()}
+  function dpOpen(which){
+    dpFor=which;const v=$$(which==="from"?"dFrom":"dTo").value||today();dpMonth=v.slice(0,7);
+    // ha ebben a hónapban nincs log, a legközelebbi logos naphoz ugrunk
+    if(avail&&avail.size&&![...avail].some(k=>k.startsWith(dpMonth))){const L=[...avail].sort(),t=new Date(v).getTime();dpMonth=L.reduce((best,k)=>Math.abs(new Date(k)-t)<Math.abs(new Date(best)-t)?k:best,L[0]).slice(0,7)}
+    $$("dFromBtn").classList.toggle("on",which==="from");$$("dToBtn").classList.toggle("on",which==="to");
+    dpRender();$$("dPop").classList.add("open");
+    setTimeout(()=>{const b=$$("dPop").querySelector(".dp-d.end:not(:disabled)")||$$("dPop").querySelector(".dp-d[data-k]:not(:disabled)");if(b)b.focus()},40);
+  }
+  function dpClose(){if(!dpFor)return;dpFor=null;$$("dPop").classList.remove("open");$$("dFromBtn").classList.remove("on");$$("dToBtn").classList.remove("on");
+    if(dpDirty){dpDirty=false;$$("dTo").dispatchEvent(new Event("change"))}}
+  function dpRender(){
+    const [Y,M]=dpMonth.split("-").map(Number),off=(new Date(Y,M-1,1).getDay()+6)%7,nd=new Date(Y,M,0).getDate();
+    const a=$$("dFrom").value,b=$$("dTo").value,td=today(),list=avail?[...avail].sort():null;
+    const minM=list&&list.length?list[0].slice(0,7):null,maxM=list&&list.length?list[list.length-1].slice(0,7):null;
+    let g="";for(let i=0;i<off;i++)g+='<span class="dp-d out"></span>';
+    for(let d=1;d<=nd;d++){
+      const k=Y+"-"+String(M).padStart(2,"0")+"-"+String(d).padStart(2,"0"),has=avail?avail.has(k):true,cls=["dp-d"];
+      if(avail&&has)cls.push("has");
+      if(k===a||k===b)cls.push("end");else if(a&&b&&k>a&&k<b)cls.push("inr");
+      if(k===td)cls.push("today");
+      g+=`<button class="${cls.join(" ")}" type="button" data-k="${k}"${has?"":" disabled"} aria-label="${Y}. ${MOL[M-1]} ${d}.${has?"":", nincs log"}">${d}</button>`;
+    }
+    const cnt=list?list.filter(k=>k.startsWith(dpMonth)).length:null;
+    $$("dPop").innerHTML=`<div class="dp-h"><button class="dp-nav" type="button" data-nav="-1" aria-label="Előző hónap"${minM&&dpMonth<=minM?" disabled":""}>‹</button><div class="dp-t">${Y}. ${MOL[M-1]}<small>${dpFor==="from"?"Kezdő nap":"Záró nap"}${cnt!=null?" · "+cnt+" logos nap":""}</small></div><button class="dp-nav" type="button" data-nav="1" aria-label="Következő hónap"${maxM&&dpMonth>=maxM?" disabled":""}>›</button></div>`
+      +`<div class="dp-w">${DOW.map(x=>`<span>${x}</span>`).join("")}</div><div class="dp-g">${g}</div>`
+      +`<div class="dp-f"><button class="dp-q" type="button" data-q="month">Ez a hónap</button><button class="dp-q" type="button" data-q="prev">Előző hónap</button>${list&&list.length?'<button class="dp-q" type="button" data-q="all">Összes log</button>':""}</div>`
+      +(avail?"":'<p class="dp-note">A logok kiválasztása után csak azok a napok választhatók, amelyekről van log.</p>');
+  }
+  function setRange(a,b){$$("dFrom").value=a;$$("dTo").value=b;dpChips();dpDirty=true}
+  $$("dPop").addEventListener("click",e=>{
+    e.stopPropagation();
+    const n=e.target.closest("[data-nav]");
+    if(n){const [Y,M]=dpMonth.split("-").map(Number),d=new Date(Y,M-1+(+n.dataset.nav),1);dpMonth=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");dpRender();return}
+    const q=e.target.closest("[data-q]");
+    if(q){const t=new Date();let a,b;
+      if(q.dataset.q==="month"){a=monthStart();b=today()}
+      else if(q.dataset.q==="prev"){a=dk(new Date(t.getFullYear(),t.getMonth()-1,1));b=dk(new Date(t.getFullYear(),t.getMonth(),0))}
+      else{const L=[...avail].sort();a=L[0];b=L[L.length-1]}
+      setRange(a,b);dpClose();return}
+    const d=e.target.closest(".dp-d[data-k]");if(!d||d.disabled)return;
+    const k=d.dataset.k;let a=$$("dFrom").value,b=$$("dTo").value;
+    if(dpFor==="from"){a=k;if(b&&b<a)b=k;setRange(a,b);dpOpen("to")} // a kezdő nap után rögtön a záró napot kérjük
+    else{b=k;if(a&&a>b)a=k;setRange(a,b);dpClose()}
+  });
+  $$("dFromBtn").onclick=e=>{e.stopPropagation();dpFor==="from"?dpClose():dpOpen("from")};
+  $$("dToBtn").onclick=e=>{e.stopPropagation();dpFor==="to"?dpClose():dpOpen("to")};
+  document.addEventListener("click",()=>dpClose());
+  document.addEventListener("keydown",e=>{if(e.key==="Escape")dpClose()});
+  dpChips();
+  const inRange=n=>{if(!$$("dOn").checked)return true;const d=dateOf(n);if(!d)return false;const a=$$("dFrom").value,b=$$("dTo").value;return(!a||d>=a)&&(!b||d<=b)};
+  function updSrc(note,cls){
+    const name=dirH?dirH.name+" mappa":dirFiles?dirLabel:"";
+    $$("src").classList.toggle("set",!!name);
+    $$("srcName").textContent=name||"Nincs logmappa kiválasztva";
+    $$("srcBtn").textContent=dirH?"Mappa cseréje":"Mappa kiválasztása";
+    const sub=$$("srcSub");sub.className=cls||"";
+    sub.textContent=note||(!name?C.srcHint:lastCount!=null?lastCount+" log betöltve a szűrt időszakból":dirH?"Elmentve · az Elemzés magától betölti a logokat":"Kattints az Elemzésre");
+    sub.title=sub.textContent;
+    check();
+  }
+  // kiválasztás után azonnal megmutatjuk, hány logfájlt találtunk (a fájlokat még nem olvassuk be)
+  async function srcNames(){
+    if(dirH){const L=[];for await(const [n,fh] of dirH.entries())if(fh.kind==="file")L.push(n);return L}
+    return dirFiles?dirFiles.map(f=>f.name):[];
+  }
+  const fmtShort=d=>d.replace(/-/g,".");
+  async function afterPick(){
+    lastCount=null;let names=[];
+    try{names=await srcNames()}catch(e){}
+    const logs=names.filter(isLog),dated=logs.map(dateOf).filter(Boolean).sort(),inR=logs.filter(inRange).length;
+    setAvail(names);
+    if(!logs.length){updSrc("Nincs köztük logfájl (.txt / .log)");return}
+    updSrc(logs.length+" logfájl"+(dated.length?" ("+fmtShort(dated[0])+" – "+fmtShort(dated[dated.length-1])+")":"")+" · "+inR+" a szűrt időszakban","ok");
+    if(inR&&!$$("go").disabled)analyze(); // ha a név is megvan, rögtön elemez
+  }
+  async function pickDir(){
+    if(window.showDirectoryPicker){
+      try{const h=await window.showDirectoryPicker({id:"logs"+(C.P||"rpg"),mode:"read"});dirH=h;dirFiles=null;idbSet(C.key,h);afterPick();return}
+      catch(e){if(e&&e.name==="AbortError")return}
+    }
+    $$("dirIn").click(); // tartalék: hagyományos mappatallózás (ezt a böngésző nem tudja megjegyezni)
+  }
+  // mappa: a böngésző megjegyzi; Fájlok: a txt logok is látszanak a választóban
+  $$("srcBtn").onclick=pickDir;
+  $$("fileBtn").onclick=()=>$$("fileIn").click();
+  $$("dirIn").onchange=e=>{const L=[...e.target.files];e.target.value="";if(!L.length)return;dirFiles=L;dirH=null;dirLabel=((L[0].webkitRelativePath||"").split("/")[0]||"logok")+" mappa";afterPick()};
+  $$("fileIn").onchange=e=>{const L=[...e.target.files];e.target.value="";if(!L.length)return;dirFiles=L;dirH=null;dirLabel="Kiválasztott fájlok ("+L.length+")";afterPick()};
+  // fájlokat továbbra is rá lehet húzni a kártyára (erre a látogatásra)
+  const fCard=$$("formCard");
+  ["dragover","dragenter"].forEach(t=>fCard.addEventListener(t,e=>{e.preventDefault();fCard.classList.add("over")}));
+  fCard.addEventListener("dragleave",e=>{if(!fCard.contains(e.relatedTarget))fCard.classList.remove("over")});
+  // egy egész mappát is rá lehet húzni (felugró ablak nélkül)
+  const readDir=dir=>new Promise(res=>{const r=dir.createReader(),out=[];const next=()=>r.readEntries(es=>{if(!es.length)return res(out);out.push(...es);next()},()=>res(out));next()});
+  fCard.addEventListener("drop",async e=>{e.preventDefault();fCard.classList.remove("over");
+    const items=[...(e.dataTransfer.items||[])],ents=items.map(i=>i.webkitGetAsEntry&&i.webkitGetAsEntry()).filter(Boolean);
+    let L=[...e.dataTransfer.files],label="Behúzott fájlok";
+    const dir=ents.find(x=>x.isDirectory);
+    if(dir){const es=(await readDir(dir)).filter(x=>x.isFile);L=await Promise.all(es.map(x=>new Promise(r=>x.file(r,()=>r(null)))));L=L.filter(Boolean);label=dir.name+" mappa"}
+    if(!L.length)return;dirFiles=L;dirH=null;dirLabel=label==="Behúzott fájlok"?label+" ("+L.length+")":label;afterPick()});
+  // csak a szűrt dátumú fájlokat olvassuk be (a fájlnévből: log-ÉÉÉÉ-HH-NN)
+  async function gather(){
+    if(dirH){
+      let p=await dirH.queryPermission({mode:"read"});
+      if(p!=="granted")p=await dirH.requestPermission({mode:"read"});
+      if(p!=="granted")throw new Error("perm");
+      const out=[],all=[];
+      for await(const [n,fh] of dirH.entries())if(fh.kind==="file"){all.push(n);if(isLog(n)&&inRange(n))out.push(await fh.getFile())}
+      setAvail(all);return out;
+    }
+    if(!dirFiles)return null;
+    setAvail(dirFiles.map(f=>f.name));
+    return dirFiles.filter(f=>isLog(f.name)&&inRange(f.name));
+  }
+  // egyszerre csak egy elemzés fut (dupla kattintás / automatikus újraszámolás nem akad össze)
+  let busy=false,again=false;
+  async function analyze(){
+    if(busy){again=true;return}
+    busy=true;const go=$$("go");go.classList.add("busy");go.textContent="Betöltés…";
+    try{
+      if(hasSrc()){
+        let L;
+        try{L=await gather()}catch(e){updSrc("Nincs hozzáférés a logokhoz · válaszd ki újra őket");return}
+        files=[];const bad=await load(L);render();lastCount=L.length-bad.length;saveRange();updSrc();
+        if(!L.length){$$("msg").textContent="A kiválasztott időszakban nincs logfájl.";$$("msg").classList.remove("hidden");return}
+        if(files.length)run();
+        if(bad.length){$$("msg").textContent=bad.length+" logot nem sikerült beolvasni ("+bad.join(", ")+"). Ha közben frissült (pl. a mai log), jelöld ki újra a logokat.";$$("msg").classList.remove("hidden")}
+        return;
+      }
+      if(files.length)run();
+    }finally{busy=false;go.classList.remove("busy");go.textContent="Elemzés";if(again){again=false;analyze()}}
+  }
 
+  // a játék épp írhatja a mai logot: olvasási hibánál kétszer újrapróbáljuk, ami így sem megy, azt kihagyjuk és jelezzük
+  const readBuf=async f=>{for(let i=0;i<3;i++){try{return await f.arrayBuffer()}catch(e){await new Promise(r=>setTimeout(r,250))}}return null};
   async function load(list){
-    if(!list||!list.length)return;
+    const bad=[];
+    if(!list||!list.length)return bad;
     for(const f of [...list]){
-      const buf=await f.arrayBuffer();
+      const buf=await readBuf(f);
+      if(!buf){bad.push(f.name);continue}
       let t=new TextDecoder("utf-8").decode(buf);
       if(t.includes("\uFFFD"))t=new TextDecoder("windows-1250").decode(buf);
       let a=null,b=null;
@@ -861,14 +1146,13 @@ function initCalc(C){
       files.push({name:f.name,size:f.size,text:t,a,b});
     }
     files.sort((a,b)=>a.name.localeCompare(b.name,"hu",{numeric:true}));
-    render();
+    render();return bad;
   }
   function render(){
     const seen=new Set();files.forEach(f=>{f.dup=seen.has(f.text);seen.add(f.text)});const nd=files.filter(f=>f.dup).length;
-    $$("flist").innerHTML=files.map((f,i)=>`<div class="fl"><span>${f.dup?'<span class="dup" title="Duplikáció">!</span>':""}${f.name.replace(/</g,"&lt;")}<small>${f.dup?"Duplikáció, nem számolom bele · ":""}${f.a?fmtD(f.a)+" – "+fmtD(f.b):"nem találtam időbélyeget"}</small></span><button class="del" data-i="${i}" title="Törlés" aria-label="Törlés"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 11v6M14 11v6"/></svg></button></div>`).join("");
-    $$("flist").querySelectorAll(".del").forEach(b=>b.onclick=()=>{files.splice(+b.dataset.i,1);render()});
-    $$("file").value="";$$("fc").textContent=files.length+" fájl"+(nd?" · "+nd+" duplikáció (!)":"");if(nd)$$("fd").open=true;
-    $$("frow").classList.toggle("hidden",!files.length);$$("drop").classList.toggle("hidden",!!files.length);check();
+    $$("flist").innerHTML=files.map((f,i)=>`<div class="fl"><span>${f.dup?'<span class="dup" title="Duplikáció">!</span>':""}${f.name.replace(/</g,"&lt;")}<small>${f.dup?"Duplikáció, nem számolom bele · ":""}${f.a?fmtD(f.a)+" – "+fmtD(f.b):"nem találtam időbélyeget"}</small></span></div>`).join("");
+    $$("fc").textContent=files.length+" fájl"+(nd?" · "+nd+" duplikáció (!)":"");if(nd)$$("fd").open=true;
+    $$("frow").classList.toggle("hidden",!files.length);check();
   }
 
   function renderLists(){
@@ -905,22 +1189,21 @@ function initCalc(C){
   function dayOf(d){const k=dk(d);return days[k]||(days[k]={ms:0,rep:0,duty:0,off:0,date:new Date(d.getFullYear(),d.getMonth(),d.getDate())})}
   // időszakok napokra bontva: az éjfélen átnyúló szakasz a következő naphoz is számít (ms = online, duty = szolgálatban, off = nem szolgálatban)
   function addSpan(a,b,key){let t=new Date(a);while(t<b){const nx=new Date(t.getFullYear(),t.getMonth(),t.getDate()+1);const end=nx<b?nx:b;dayOf(t)[key]+=end-t;t=end}}
-  function fitBook(){$$("book").style.height=(bookOpen?Math.max(190,Math.min($$("bkIn").offsetHeight+4,420)):bookClosedH())+"px"}
+  // Daily Stats: napi kártyák vízszintes sávban (legújabb a végén); kattintásra megfordul: duty / offduty percek + reportok
+  const WD=["V","H","K","Sze","Cs","P","Szo"];
   function renderDays(){
     const keys=Object.keys(days).sort();
-    $$("bkCount").textContent=keys.length+" nap";
-    $$("dayGrid").innerHTML=keys.map(k=>{const d=days[k],mo=MO[d.date.getMonth()],dn=d.date.getDate();
-      return `<div class="day${flipped.has(k)?" flip":""}" data-k="${k}" tabindex="0" role="button" aria-label="${mo} ${dn}"><div class="dflip"><div class="dface front"><span class="mo">${mo}</span><span class="dn">${dn}</span></div><div class="dface back"><div class="dsplit"><div class="dd du"><b>${mins(d.duty)}<i>p</i></b><small>duty</small></div><div class="dd of"><b>${mins(d.off)}<i>p</i></b><small>offduty</small></div></div><div class="rp">${GUARD_SM}${d.rep} report</div></div></div></div>`}).join("")
-      ||'<p class="hint" style="grid-column:1/-1;margin:0">Még nincs napi adat. Tölts fel logokat, és indítsd az elemzést.</p>';
-    fitBook();
+    $$("dsCount").textContent=keys.length;
+    $$("dayGrid").innerHTML=keys.map(k=>{const d=days[k],on=(d.duty+d.off)||1,dp=Math.round(d.duty/on*100);
+      return `<div class="day${flipped.has(k)?" flip":""}" data-k="${k}" tabindex="0" role="button" aria-label="${fmtDay(d.date)}: ${mins(d.duty)} perc duty, ${mins(d.off)} perc offduty, ${d.rep} report"><div class="dflip"><div class="dface front"><span class="wd">${WD[d.date.getDay()]}</span><span class="dn">${d.date.getDate()}</span><span class="mo">${MOS[d.date.getMonth()]}</span><span class="dbar" title="Duty aránya az online időből"><i style="width:${dp}%"></i></span></div><div class="dface back"><div class="dsplit"><div class="dd du"><b>${mins(d.duty)}<i>p</i></b><small>duty</small></div><div class="dd of"><b>${mins(d.off)}<i>p</i></b><small>offduty</small></div></div><div class="rp">${GUARD_SM}${d.rep} report</div></div></div></div>`}).join("")
+      ||'<p class="hint" style="margin:0">A szűrt időszakban nincs napi adat.</p>';
+    const g=$$("dayGrid");setTimeout(()=>{g.scrollLeft=g.scrollWidth},0); // a legutóbbi nap látszódjon
   }
   const flipDay=el=>{const k=el.dataset.k;el.classList.toggle("flip");el.classList.contains("flip")?flipped.add(k):flipped.delete(k)};
   $$("dayGrid").addEventListener("click",e=>{const el=e.target.closest(".day");if(el)flipDay(el)});
   $$("dayGrid").addEventListener("keydown",e=>{const el=e.target.closest(".day");if(el&&(e.key==="Enter"||e.key===" ")){e.preventDefault();flipDay(el)}});
-  const setBook=o=>{bookOpen=o;$$("book").classList.toggle("open",o);fitBook();if(o)setTimeout(()=>{if(bookOpen)$$("book").scrollIntoView({behavior:"smooth",block:"nearest"})},580)};
-  $$("bkCover").onclick=()=>setBook(true);
-  $$("bkCover").onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();setBook(true)}};
-  $$("bkX").onclick=()=>setBook(false);
+  $$("dsPrev").onclick=()=>$$("dayGrid").scrollBy({left:-$$("dayGrid").clientWidth*.8,behavior:"smooth"});
+  $$("dsNext").onclick=()=>$$("dayGrid").scrollBy({left:$$("dayGrid").clientWidth*.8,behavior:"smooth"});
   root.querySelectorAll("[data-open]").forEach(el=>{
     const go=()=>{const [g,v]=el.dataset.open.split(":");
       if(g==="san")openSan=openSan===v?null:v;else if(g==="act")openAct=openAct===v?null:v;
@@ -928,23 +1211,6 @@ function initCalc(C){
     el.onclick=go;el.onkeydown=ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();go()}};
   });
 
-  // Aktív napok: éves rács (hétfő–vasárnap × hetek), színerősség az online percek szerint, leghosszabb sorozat
-  function renderHeat(){
-    const Y=hmYear,off=(new Date(Y,0,1).getDay()+6)%7,nDays=(Y%4===0&&(Y%100!==0||Y%400===0))?366:365,W=Math.ceil((off+nDays)/7);
-    let cells="",total=0,cur=0,best=0,mo="";
-    for(let i=0;i<W*7;i++){
-      const d=new Date(Y,0,1-off+i);
-      if(d.getFullYear()!==Y){cells+='<i class="x"></i>';continue}
-      const x=days[dk(d)];
-      if(x){total++;cur++;if(cur>best)best=cur;cells+=`<i class="l${lvOf(x.ms)}" title="${fmtDay(d)} · ${mins(x.ms)} perc online"></i>`}
-      else{cur=0;cells+=`<i title="${fmtDay(d)} · nem volt online"></i>`}
-    }
-    for(let m=0;m<12;m++){const di=off+Math.round((new Date(Y,m,1)-new Date(Y,0,1))/864e5);const c=Math.floor(di/7)+(di%7>3?1:0);mo+=`<span style="grid-column:${c+1}/span 3">${MOS[m]}</span>`}
-    $$("hm").innerHTML=`<div class="hm-in" style="--w:${W}"><div class="hm-mo">${mo}</div><div class="hm-dw">${DOW.map(x=>`<span>${x}</span>`).join("")}</div><div class="hm-g">${cells}</div></div>`;
-    $$("hmTotal").textContent=total;$$("hmStreak").textContent=best;
-    $$("hmYears").innerHTML=C.years.length<2?`<span class="hmy on">${Y}</span>`:C.years.map(y=>`<button type="button" class="hmy" data-y="${y}" aria-pressed="${y===Y}">${y}</button>`).join("");
-  }
-  $$("hmYears").addEventListener("click",e=>{const b=e.target.closest("button[data-y]");if(!b)return;hmYear=+b.dataset.y;renderHeat();const f=$$("hmYears").querySelector('[data-y="'+hmYear+'"]');if(f)f.focus()});
 
   function setGoal(k,ms,target){
     const m=Math.round(ms/60000),p=m/target,c=GOAL_C.find(x=>p<x[0]),card=$$("g"+k);
@@ -1019,10 +1285,10 @@ function initCalc(C){
     }
     sessions.forEach(x=>addSpan(x.s,x.e,"duty")); // napi duty percek a Daily Stats könyvhöz
     doneName=nm;
-    renderLists();renderDays();renderHeat();
+    renderLists();renderDays();
     root.classList.toggle("noadm",!adminOn);
     $$("alvl").textContent=lvl?"GameAdmin "+lvl:"";$$("alvl").classList.toggle("hidden",!lvl);
-    $$("res").classList.remove("hidden");
+    $$("res").classList.remove("hidden");root.classList.add("done");
     $$("msg").classList.add("hidden");
     if(adminOn&&!sessions.length){$$("msg").textContent="Nem találtam szolgálati bejegyzést ennél a névnél. Ellenőrizd az admin nevét.";$$("msg").classList.remove("hidden")}
     setGoal(1,sessions.reduce((s,x)=>s+(x.e-x.s),0),C.goal.duty);
@@ -1030,7 +1296,7 @@ function initCalc(C){
     updStatus();
     if(!autoRun)$$("res").scrollIntoView({behavior:"smooth",block:matchMedia(DESK).matches?"nearest":"start"});
   }
-  $$("go").onclick=run;
+  $$("go").onclick=analyze;
 
   // K/D: bekapcsolva a sorban megjelenik az InGame név mező; a panel kikapcsolva is látszik, „inaktív” jelzéssel
   function kdUI(){const on=$$("kd").checked;$$("kdrow").classList.toggle("on",on);$$("kdSec").classList.toggle("off",!(on&&$$("ign").value.trim()));
@@ -1038,33 +1304,42 @@ function initCalc(C){
   $$("kdrow").addEventListener("click",e=>{if(e.target.closest("input,.switch"))return;$$("kd").checked=!$$("kd").checked;$$("kd").dispatchEvent(new Event("change"))});
   $$("kd").addEventListener("change",()=>{if($$("kd").checked&&!$$("ign").value.trim())setTimeout(()=>$$("ign").focus(),30)});
   // a név és a K/D beállítás megmarad a böngészőben (a logok nem)
-  function saveS(){try{localStorage.setItem(C.key,JSON.stringify({nev:$$("nev").value,ign:$$("ign").value,kd:$$("kd").checked}))}catch(e){}}
-  try{const sv=JSON.parse(localStorage.getItem(C.key)||"{}");if(sv.nev)$$("nev").value=sv.nev;if(sv.ign)$$("ign").value=sv.ign;if(sv.kd)$$("kd").checked=true}catch(e){}
+  // név (és InGame név) mentése csak bepipálva; a K/D kapcsoló mindig megmarad
+  function saveS(){try{const keep=$$("saveName").checked;localStorage.setItem(C.key,JSON.stringify({save:keep,nev:keep?$$("nev").value:"",ign:keep?$$("ign").value:"",kd:$$("kd").checked}))}catch(e){}}
+  try{const sv=JSON.parse(localStorage.getItem(C.key)||"{}");$$("saveName").checked=sv.save!==undefined?!!sv.save:!!sv.nev;if(sv.nev)$$("nev").value=sv.nev;if(sv.ign)$$("ign").value=sv.ign;if(sv.kd)$$("kd").checked=true}catch(e){}
+  $$("saveName").addEventListener("change",saveS);
   let autoT;
   function onSet(){saveS();kdUI();check();clearTimeout(autoT);
     if(!$$("res").classList.contains("hidden")&&!$$("go").disabled)autoT=setTimeout(()=>{autoRun=true;run();autoRun=false},450)}
   ["nev","ign"].forEach(id=>$$(id).addEventListener("input",onSet));
   $$("kd").addEventListener("change",onSet);
-  root.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.tagName==="INPUT"&&e.target.type==="text"&&!$$("go").disabled)run()});
-  kdUI();check();renderLists();fitBook();
-  return {fitBook,load,run,get name(){return doneName}};
+  root.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.tagName==="INPUT"&&e.target.type==="text"&&!$$("go").disabled)analyze()});
+  // dátum módosítására nem számolunk újra: az új szűrés csak az Elemzés gombra érvényesül
+  ["dFrom","dTo","dOn"].forEach(id=>$$(id).addEventListener("change",()=>{$$("dfIn").classList.toggle("off",!$$("dOn").checked)}));
+  $$("dfIn").classList.toggle("off",!$$("dOn").checked);
+  kdUI();renderLists();updSrc();
+  // elmentett logmappa: ha a böngésző már engedi, magától betölti és elemzi
+  idbGet(C.key).then(async h=>{if(!h||dirH||dirFiles)return;dirH=h;updSrc();
+    try{const p=await h.queryPermission({mode:"read"});
+      if(p==="granted"){if(!$$("go").disabled){autoRun=true;try{await analyze()}finally{autoRun=false}}}
+      else updSrc("Elmentve · kattints az Elemzésre a logok betöltéséhez")}catch(e){}});
+  return {load,run,analyze,get name(){return doneName}};
 }
 
 // jobb alsó sáv: SeeRPG | név | dátum (a 2. oldalon SeeMTA)
 let CALCS={};
 function updStatus(){
-  const mta=document.body.dataset.site==="green",c=mta?CALCS.mta:CALCS.rpg;
+  const sd=document.body.dataset,mta=sd.site==="green"||(sd.site==="news"&&sd.from==="green"),c=mta?CALCS.mta:CALCS.rpg;
   $("stB").textContent=mta?"MTA":"RPG";$("stbar").classList.toggle("mta",mta);
   $("stName").textContent=c&&c.name?c.name:"Vendég";
   $("stTime").textContent=new Date().toLocaleString("hu-HU",{year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit"});
 }
 CALCS={
-  rpg:initCalc({root:$("page"),P:"",key:"seerpg-calc",rules:rulesRPG,cur:"Ft",pt:"SP",heat:"240,200,80",years:[2026],goal:{duty:3000,off:2000},labels:{}}),
-  mta:initCalc({root:$("page2"),P:"g_",key:"seemta-calc",rules:rulesMTA,cur:"$",pt:"PP",heat:"52,211,153",years:[2026,2025,2024,2023,2022],goal:{duty:3000,off:2000},
+  rpg:initCalc({root:$("page"),P:"",key:"seerpg-calc",srcHint:"Pl.: C:\\ProgramData\\SeeRPG\\logs",rules:rulesRPG,cur:"Ft",pt:"SP",heat:"240,200,80",years:[2026],goal:{duty:3000,off:2000},labels:{}}),
+  mta:initCalc({root:$("page2"),P:"g_",key:"seemta-calc",srcHint:"Válaszd ki a SeeMTA logok mappáját",rules:rulesMTA,cur:"$",pt:"PP",heat:"52,211,153",years:[2026,2025,2024,2023,2022],goal:{duty:3000,off:2000},
     labels:{payTitle:"Kamat",pay1:"Összes jóváírás",pay2:"Összes PP",pay3:"Megérkezett kamatok"}})
 };
 updStatus();setInterval(updStatus,15000);
-addEventListener("resize",()=>{CALCS.rpg.fitBook();CALCS.mta.fitBook()});
 
 $("tabSee").src=$("heroSee").src;
 let lastSite="see";
@@ -1084,13 +1359,13 @@ document.querySelectorAll(".sites button").forEach(b=>b.onclick=()=>{
   const g=b.dataset.site,prev=document.body.dataset.site;document.body.dataset.site=g;
   document.querySelectorAll(".sites button").forEach(x=>x.setAttribute("aria-pressed",x===b));
   moveInd(b,prev!=="news");window.scrollTo({top:0,behavior:"smooth"});
-  (g==="green"?CALCS.mta:CALCS.rpg).fitBook();updStatus();
+  updStatus();applyBg(false);
 });
 
 // ===== Felső sáv: háttér, changelog, SeeNews =====
 const CHANGELOG=[
   // Új bejegyzést ide, a lista ELEJÉRE írj: {date:"2026. november 4.",items:["szöveg","másik sor"]}
-  {date:"2026. november 5.",items:["Reports fül minigame."]},
+  {date:"2026. november 5.",items:["Reports fül minigame.","Gyorsított logszűrés"]},
   {date:"2026. november 4.",items:["Megnyitott a SeeMTA kalkulátor!","Perc, kamat számlálások, rengeteg statisztika elemzése","További optimalizálások, hibajavítások."]},
   {date:"2026. november 4.",items:["háttér testreszabása","SeeNews fül","SP fizetés, gyógyítás, asegit fülek optimalizálva","kisebb optimalizálások"]}
 ];
@@ -1111,10 +1386,13 @@ $("infoBtn").onclick=e=>{e.stopPropagation();const o=!$("infoPanel").classList.c
 $("infoPanel").addEventListener("click",e=>e.stopPropagation());
 
 const PAL=[["Arany","240,200,80"],["Narancs","255,145,60"],["Piros","255,92,77"],["Rózsaszín","244,114,182"],["Lila","168,85,247"],["Indigó","99,102,241"],["Kék","56,150,255"],["Égkék","34,211,238"],["Türkiz","59,221,206"],["Zöld","34,197,94"],["Lime","163,230,53"],["Ezüst","205,208,220"]];
-const BG0={c:PAL[0][1],i:100};
-let bg={c:BG0.c,i:BG0.i};
+// háttér oldalanként külön: SeeRPG (alap arany) és SeeMTA (alap türkiz); a SeeNews a forrásoldaléval megy
+const BG0={see:{c:PAL[0][1],i:100},green:{c:"59,221,206",i:100}},BGK={see:"seerpg-bg",green:"seemta-bg"};
+const bgs={see:{...BG0.see},green:{...BG0.green}};
+const bgPage=()=>{const d=document.body.dataset;return d.site==="green"||(d.site==="news"&&d.from==="green")?"green":"see"};
+let bg=bgs.see;
 const okBg=s=>!!s&&PAL.some(p=>p[1]===s.c)&&+s.i>=0&&+s.i<=100;
-try{const s=JSON.parse(localStorage.getItem("seerpg-bg")||"null");if(okBg(s))bg={c:s.c,i:Math.round(+s.i)}}catch(e){}
+for(const p of ["see","green"]){try{const s=JSON.parse(localStorage.getItem(BGK[p])||"null");if(okBg(s))bgs[p]={c:s.c,i:Math.round(+s.i)}}catch(e){}}
 // mentett beállítások: felhasználónként (böngészőnként) legfeljebb 3
 const NSAVE=3;let bgSaves=[null,null,null];
 try{const s=JSON.parse(localStorage.getItem("seerpg-bg-saves")||"null");if(Array.isArray(s))bgSaves=[0,1,2].map(k=>okBg(s[k])?{c:s[k].c,i:Math.round(+s[k].i)}:null)}catch(e){}
@@ -1131,24 +1409,25 @@ function renderSaves(pop,focusK){
 function storeSaves(){try{localStorage.setItem("seerpg-bg-saves",JSON.stringify(bgSaves))}catch(e){}}
 $("pal").innerHTML=PAL.map(p=>`<button class="sw" type="button" style="--c:${p[1]}" data-c="${p[1]}" title="${p[0]}" aria-label="${p[0]}" aria-pressed="false"></button>`).join("");
 function applyBg(save){
-  const b=document.body;b.style.setProperty("--bgc",bg.c);b.style.setProperty("--bgi",bg.i/100);
-  b.style.setProperty("--bgc2",bg.c===BG0.c?"59,221,206":bg.c); // a 2. oldal alapból a saját türkiz színét kapja
+  const pg=bgPage();bg=bgs[pg];
+  const b=document.body;b.style.setProperty("--bgc",bgs.see.c);b.style.setProperty("--bgi",bgs.see.i/100);
+  b.style.setProperty("--bgc2",bgs.green.c);b.style.setProperty("--bgi2",bgs.green.i/100);
   $("bgRange").value=bg.i;$("bgOut").textContent=bg.i+"%";
   $("pal").querySelectorAll(".sw").forEach(s=>s.setAttribute("aria-pressed",s.dataset.c===bg.c));
   $("bgSv").querySelectorAll(".bgs[data-k]").forEach(el=>{const s=bgSaves[+el.dataset.k];el.classList.toggle("cur",!!s&&s.c===bg.c&&s.i===bg.i)});
-  if(save){try{localStorage.setItem("seerpg-bg",JSON.stringify(bg))}catch(e){}}
+  if(save){try{localStorage.setItem(BGK[pg],JSON.stringify(bg))}catch(e){}}
 }
 $("bgSv").addEventListener("click",e=>{
   const d=e.target.closest("[data-del]");
   if(d){const k=+d.dataset.del;bgSaves[k]=null;storeSaves();renderSaves(null,k);return}
   const b=e.target.closest("[data-k]");if(!b)return;const k=+b.dataset.k;
-  if(bgSaves[k]){bg={c:bgSaves[k].c,i:bgSaves[k].i};applyBg(true)}
+  if(bgSaves[k]){bgs[bgPage()]={c:bgSaves[k].c,i:bgSaves[k].i};applyBg(true)}
   else{bgSaves[k]={c:bg.c,i:bg.i};storeSaves();renderSaves(k,k)}
 });
 renderSaves();
 $("pal").addEventListener("click",e=>{const s=e.target.closest(".sw");if(!s)return;bg.c=s.dataset.c;applyBg(true)});
 $("bgRange").addEventListener("input",e=>{bg.i=+e.target.value;applyBg(true)});
-$("bgReset").onclick=()=>{bg={c:BG0.c,i:BG0.i};applyBg(true)};
+$("bgReset").onclick=()=>{const p=bgPage();bgs[p]={...BG0[p]};applyBg(true)};
 function setBg(o){$("bgPop").classList.toggle("open",o);$("bgBtn").setAttribute("aria-expanded",o)}
 $("bgBtn").onclick=e=>{e.stopPropagation();const o=!$("bgPop").classList.contains("open");setBg(o);if(o){setCl(false);setInfo(false)}};
 $("bgPop").addEventListener("click",e=>e.stopPropagation());
@@ -1161,7 +1440,7 @@ applyBg(false);
 $("newsBtn").onclick=()=>{
   const cur=document.body.dataset.site;
   if(cur==="news"){const b=document.querySelector('.sites button[data-site="'+lastSite+'"]')||document.querySelector('.sites button');b.click();return}
-  lastSite=cur;document.body.dataset.site="news";
+  lastSite=cur;document.body.dataset.from=cur==="green"?"green":"see";document.body.dataset.site="news";applyBg(false);
   document.querySelectorAll(".sites button").forEach(x=>x.setAttribute("aria-pressed","false"));
   document.querySelectorAll("#pageNews").forEach(n=>n.removeAttribute("aria-hidden"));
   setBg(false);setCl(false);setInfo(false);updStatus();
@@ -1207,6 +1486,32 @@ $("nmX").onclick=closeNews;
 $("nModal").addEventListener("click",e=>{if(e.target===$("nModal"))closeNews()});
 document.addEventListener("keydown",e=>{if(!nmOpen())return;if(e.key==="Escape"){e.preventDefault();closeNews()}else if(e.key==="Tab"){e.preventDefault();$("nmX").focus()}});
 
+// ===== A nap első látogatásakor kis értesítés jobb felül új changelogról / hírről (nem akadályoz, bezárható) =====
+(function(){
+  const day=dk(new Date()),get=k=>{try{return localStorage.getItem(k)}catch(e){return null}},put=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
+  const NEWS_ICO='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg>';
+  function toast(kind,title,text,act){
+    const el=document.createElement("div");el.className="toast "+kind;
+    el.innerHTML=`<span class="to-ico">${kind==="cl"?MEGA:NEWS_ICO}</span><button class="to-body" type="button"><b>${escH(title)}</b><span>${escH(text)}</span></button><button class="to-x" type="button" title="Bezárás" aria-label="Bezárás">×</button>`;
+    const close=()=>{el.classList.remove("in");el.classList.add("out");setTimeout(()=>el.remove(),350)};
+    el.querySelector(".to-x").onclick=e=>{e.stopPropagation();close()};
+    el.querySelector(".to-body").onclick=e=>{e.stopPropagation();close();act()};
+    $("toasts").appendChild(el);requestAnimationFrame(()=>requestAnimationFrame(()=>el.classList.add("in")));
+  }
+  if(CHANGELOG.length&&clSeen!==clKey&&get("seecalc-pop-cl")!==day){put("seecalc-pop-cl",day);toast("cl","Új changelog",CHANGELOG[0].items.join(" · "),()=>setCl(true))}
+  if(get("seerpg-news-seen")!==NEWS[0].id&&get("seecalc-pop-news")!==day){put("seecalc-pop-news",day);toast("news","Új hír a SeeNews-on",NEWS[0].title,()=>$("newsBtn").click())}
+})();
+
+// ===== Eddigi látogatók: közös számláló (abacus.jasoncameron.dev); egy böngésző percenként legfeljebb 1 látogatást ad hozzá =====
+(async function(){
+  const API="https://abacus.jasoncameron.dev/",NS="seegame-kalkulator",KEY="visits";
+  let last=0;try{last=+localStorage.getItem("seecalc-visit")||0}catch(e){}
+  const hit=Date.now()-last>=60000;
+  if(hit){try{localStorage.setItem("seecalc-visit",String(Date.now()))}catch(e){}}
+  try{const r=await fetch(API+(hit?"hit/":"get/")+NS+"/"+KEY,{cache:"no-store"});
+    if(r.ok){const j=await r.json();if(typeof j.value==="number"&&j.value>=0)$("visN").textContent=j.value.toLocaleString("hu-HU")}}catch(e){}
+})();
+
 </script>
 <script>
 (function(){
@@ -1218,7 +1523,10 @@ const CATS=[
 {k:"rule",n:"Szabálysértés/Panasz",c:"#f0c850",t:["rdm a belvárosban","metagaming","nonrp viselkedés","kocsival gázolt","szabálytalan üldözés"],d:["Egy játékos ok nélkül megölt a belvárosban, nincs RP indok.","Egy játékos az IC-n kívüli információt használt fel ellenem.","Többször kocsival nekem jött minden RP nélkül."]},
 {k:"super",n:"FőAdmin/SzuperAdmin",c:"#ff8a2a",t:["admin panasz","fizetési probléma","kitiltás felülvizsgálata"],d:["Egy admin szerintem jogtalanul büntetett, szeretném felülvizsgáltatni.","Nem kaptam meg a fizetésemet a legutóbbi órában.","Szeretnék kitiltás-felülvizsgálatot kérni."]},
 {k:"other",n:"Egyéb",c:"#3fcf6e",t:["javaslat","egyéb észrevétel","csoport kérdés"],d:["Lenne egy javaslatom a szerver fejlesztésére.","Szeretnék egy általános észrevételt jelezni."]}];
-const NAMES=["Tyzee Young","Wang Wei Guo","Theo Pereira","Yuna Yue Rei","Rajko Sosic","Drago Raykov","Gabriele Rossi","Ricardo Alvarez","Kabir Mehta","Raul Perez","Mira Novak","Luca Bianchi"];
+// bejelentők: véletlenszerűen összerakott nevek
+const FIRST=["Marco","Elena","Dorian","Nadia","Viktor","Lena","Bastian","Ilona","Kenji","Amara","Tobias","Zara","Matteo","Freya","Oskar","Selin","Dmitri","Aiko","Rafael","Noemi","Hugo","Ines","Levente","Mila","Jasper","Yara","Bence","Cleo","Andrei","Sofia","Emil","Talia","Nico","Hanna","Ruben","Vera"];
+const LAST=["Kovalenko","Marchetti","Lindqvist","Okafor","Duarte","Hartmann","Petrescu","Nakamura","Vidal","Kowalczyk","Brennan","Halvorsen","Moreau","Szabados","Castillo","Yilmaz","Novotny","Fischer","Ramires","Delacroix","Takeda","Oliveira","Bergstrom","Ivanov","Rinaldi","Horvat","Sanchez","Molnar","Weber","Kaplan","Laurent","Dvorak"];
+const genName=()=>FIRST[Math.floor(Math.random()*FIRST.length)]+" "+LAST[Math.floor(Math.random()*LAST.length)];
 const CMDS=["goto","gethere","spec","openucp","asegit","agyogyit","vhspawn","kick","ban","motozas","posterror"];
 const rnd=(a,b)=>Math.floor(a+Math.random()*(b-a+1)),pick=a=>a[rnd(0,a.length-1)];
 const esc=x=>String(x).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
@@ -1315,7 +1623,7 @@ function accept(){
 function addReport(){
   if(openList().length>=14)return;
   const c=pick(CATS);nextId+=rnd(1,35);
-  reports.push({id:nextId,cat:c,title:pick(c.t),desc:"Heló! "+pick(c.d),name:pick(NAMES),accId:rnd(100,9999),oid:rnd(1,300),t:Date.now(),acc:false,fresh:true});
+  reports.push({id:nextId,cat:c,title:pick(c.t),desc:"Heló! "+pick(c.d),name:genName(),accId:rnd(100,9999),oid:rnd(1,300),t:Date.now(),acc:false,fresh:true});
   renderList();beep();
 }
 function schedule(first){clearTimeout(sched);sched=setTimeout(()=>{addReport();schedule(false)},first?rnd(3000,7000):rnd(9000,28000))}
