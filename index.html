@@ -637,76 +637,6 @@ button.nvsave.on .ok{opacity:1;transform:none}
 .np-x{all:unset;box-sizing:border-box;position:absolute;top:10px;right:10px;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.05);color:var(--muted);font-size:1.05rem;line-height:1;cursor:pointer;transition:color .2s,background .2s}
 .np-x:hover,.np-x:focus-visible{color:#fff;background:rgba(255,255,255,.14)}
 @media(prefers-reduced-motion:reduce){.np-ico::after{animation:none}.npop{animation-duration:.01s}}
-/* ===== Űrlap: név mentése, logmappa, dátumszűrő ===== */
-.lbrow{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px}
-.lbrow label[for]{margin:0}
-label.ck{position:relative;display:inline-flex;align-items:center;gap:7px;margin:0;color:var(--muted);font-size:.78rem;font-weight:700;letter-spacing:.02em;text-transform:none;cursor:pointer;user-select:none;transition:color .2s}
-.ck input{position:absolute;opacity:0;width:0;height:0}
-.ck i{position:relative;flex:none;width:17px;height:17px;border-radius:5px;border:1px solid #3a3a3a;background:var(--card2);transition:border-color .2s,background .2s}
-.ck i::after{content:"";position:absolute;left:5px;top:1.5px;width:4px;height:9px;border:solid var(--accent-ink);border-width:0 2px 2px 0;transform:rotate(45deg) scale(0);transition:transform .2s cubic-bezier(.3,1.5,.4,1)}
-.ck input:checked+i{border-color:var(--accent);background:var(--accent)}
-.ck input:checked+i::after{transform:rotate(45deg) scale(1)}
-.ck:hover i,.ck input:focus-visible+i{border-color:var(--accent)}
-.ck:has(input:checked){color:var(--text)}
-.src{margin-top:14px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--card2)}
-.srcrow{display:flex;align-items:center;gap:12px}
-.srcico{flex:none;display:grid;place-items:center;width:36px;height:36px;border-radius:10px;background:rgba(var(--acc),.12);color:var(--accent)}
-.srcico svg{width:19px;height:19px}
-.srctxt{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.3}
-.srctxt b{overflow:hidden;font-size:.92rem;white-space:nowrap;text-overflow:ellipsis}
-.srctxt small{overflow:hidden;color:var(--muted);font-size:.74rem;white-space:nowrap;text-overflow:ellipsis}
-.src:not(.set) .srctxt b{color:var(--muted)}
-button.srcbtn{flex:none;width:auto;margin:0;padding:8px 13px;border-radius:9px;border:1px solid rgba(var(--acc),.55);background:transparent;box-shadow:none;color:var(--accent);font-size:.78rem;font-weight:800;letter-spacing:.02em;text-transform:none}
-button.srcbtn:hover:not(:disabled),button.srcbtn:focus-visible{transform:none;background:rgba(var(--acc),.1);box-shadow:0 0 14px rgba(var(--acc),.25)}
-.src:not(.set) button.srcbtn{background:var(--accent);color:var(--accent-ink)}
-.srcbtns{flex:none;display:flex;gap:6px}
-.src:not(.set) button.srcbtn.alt,button.srcbtn.alt{background:transparent;color:var(--accent);border-color:rgba(var(--acc),.4)}
-.srctxt small.bad{color:#ff6b5e}
-.srctxt small.ok{color:#9be3a7}
-.dfrow{display:flex;align-items:center;flex-wrap:wrap;gap:8px 14px;margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
-.dfin{flex:1;display:flex;align-items:center;gap:8px;min-width:250px;transition:opacity .2s}
-.dfin.off{opacity:.4;pointer-events:none}
-label.dbox{flex:1;display:flex;align-items:center;gap:8px;height:36px;margin:0;padding:0 10px;border:1px solid var(--line);border-radius:9px;background:var(--card);color:var(--muted);letter-spacing:0;text-transform:none;cursor:text;transition:border-color .2s}
-.dbox:focus-within{border-color:var(--accent)}
-.dbox svg{flex:none;width:15px;height:15px;color:var(--accent)}
-.dbox input{flex:1;min-width:0;padding:0;border:0;outline:none;background:transparent;color:var(--text);font:inherit;font-size:.88rem;font-weight:700;color-scheme:dark}
-.dsep{color:var(--muted)}
-#formCard .frow,#page2 .frow{margin-top:10px}
-
-.page .frow{display:none!important}
-@media(min-width:1040px) and (min-height:560px){.dfrow{margin-top:8px;padding-top:8px}.dfin{flex:none;margin-left:auto;min-width:0}}
-/* ===== Saját dátumválasztó (csak logos napok) ===== */
-.dfin{position:relative}
-button.dchip{flex:none;display:inline-flex;align-items:center;gap:9px;width:auto;min-width:156px;height:34px;margin:0;padding:0 13px;border:1px solid var(--line);border-radius:10px;background:var(--card);box-shadow:none;color:var(--text);font-size:.86rem;font-weight:800;letter-spacing:.02em;text-transform:none;font-variant-numeric:tabular-nums;transition:border-color .2s,box-shadow .2s}
-button.dchip svg{width:15px;height:15px;color:var(--accent)}
-button.dchip:hover:not(:disabled),button.dchip:focus-visible,button.dchip.on{transform:none;border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 0 16px rgba(var(--acc),.2);outline:none}
-.dpop{position:absolute;right:0;top:calc(100% + 8px);z-index:60;width:304px;padding:12px;border:1px solid var(--line);border-radius:16px;background:rgba(20,20,20,.98);backdrop-filter:blur(12px);box-shadow:0 18px 50px rgba(0,0,0,.65);opacity:0;visibility:hidden;transform:translateY(-6px) scale(.97);transform-origin:top right;transition:opacity .2s,transform .28s cubic-bezier(.2,.8,.2,1),visibility 0s .28s}
-.dpop.open{opacity:1;visibility:visible;transform:none;transition-delay:0s}
-.dp-h{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
-.dp-t{text-align:center;font-size:.95rem;font-weight:900;line-height:1.2}
-.dp-t small{display:block;margin-top:2px;color:var(--muted);font-size:.68rem;font-weight:700}
-button.dp-nav{display:grid;place-items:center;width:32px;height:32px;margin:0;padding:0;border:1px solid var(--line);border-radius:9px;background:var(--card2);box-shadow:none;color:var(--text);font-size:1.15rem;line-height:1;text-transform:none;letter-spacing:0}
-button.dp-nav:hover:not(:disabled),button.dp-nav:focus-visible{transform:none;box-shadow:none;border-color:var(--accent);color:var(--accent)}
-button.dp-nav:disabled{opacity:.25}
-.dp-w,.dp-g{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
-.dp-w span{padding:4px 0;color:var(--muted);font-size:.66rem;font-weight:800;text-align:center}
-.dp-d{position:relative;display:grid;place-items:center;height:36px}
-button.dp-d{width:auto;margin:0;padding:0;border:0;border-radius:9px;background:transparent;box-shadow:none;color:var(--text);font-size:.85rem;font-weight:700;letter-spacing:0;text-transform:none;font-variant-numeric:tabular-nums;transition:background .15s}
-button.dp-d.has::after{content:"";position:absolute;left:50%;bottom:4px;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--accent)}
-button.dp-d:hover:not(:disabled),button.dp-d:focus-visible{transform:none;box-shadow:none;background:rgba(var(--acc),.16);outline:none}
-button.dp-d:disabled{opacity:1;color:#4b4b48;cursor:default}
-button.dp-d.inr{border-radius:4px;background:rgba(var(--acc),.12)}
-button.dp-d.end{background:var(--accent);color:var(--accent-ink)}
-button.dp-d.end::after{background:var(--accent-ink)}
-button.dp-d.today:not(.end){box-shadow:inset 0 0 0 1px rgba(255,255,255,.28)}
-.dp-f{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
-button.dp-q{width:auto;margin:0;padding:5px 10px;border:1px solid var(--line);border-radius:8px;background:transparent;box-shadow:none;color:#cfcfca;font-size:.72rem;font-weight:800;letter-spacing:.02em;text-transform:none}
-button.dp-q:hover:not(:disabled),button.dp-q:focus-visible{transform:none;box-shadow:none;border-color:var(--accent);color:var(--text)}
-.dp-note{margin:8px 2px 0;color:var(--muted);font-size:.7rem;line-height:1.4}
-/* elemzés közben a gomb jelzi a betöltést */
-button.gobtn.busy{opacity:.75;cursor:progress}
-@media(max-width:600px){.dfin{flex-wrap:wrap}button.dchip{flex:1;min-width:0}.dpop{left:0;right:auto;width:min(304px,calc(100vw - 48px))}}
-
 /* ===== Reports: V1 jelzés az ikon mellett ===== */
 .rpv{flex:none;margin-left:2px;padding:1px 6px 2px;border-radius:6px;border:1px solid rgba(var(--acc),.55);background:rgba(var(--acc),.12);color:var(--accent);font-size:.62rem;font-style:normal;font-weight:900;letter-spacing:.06em;line-height:1.3}
 
@@ -824,6 +754,7 @@ button.tsw.none::after{content:"";position:absolute;left:3px;right:3px;top:50%;h
 .tbl-more{display:flex;justify-content:center;gap:8px;margin-top:10px}
 @media(min-width:1040px) and (min-height:560px){body[data-site="table"] #pageTable{flex:1 1 auto;min-height:0;overflow:auto}}
 
+
 body[data-site="table"]::before{background:radial-gradient(900px 420px at 50% -140px,rgba(var(--bgc),calc(.14*var(--bgi))),transparent 70%),linear-gradient(160deg,rgba(0,0,0,0) 28%,rgba(var(--bgc),calc(.07*var(--bgi))) 62%,rgba(var(--bgc),calc(.22*var(--bgi))) 100%)}
 body[data-site="table"][data-from="green"]::before{background:radial-gradient(900px 420px at 50% -140px,rgba(var(--bgc2,59,221,206),calc(.14*var(--bgi,1))),transparent 70%),linear-gradient(160deg,rgba(0,0,0,0) 28%,rgba(var(--bgc2,59,221,206),calc(.07*var(--bgi,1))) 62%,rgba(var(--bgc2,59,221,206),calc(.22*var(--bgi,1))) 100%)}
 </style>
@@ -863,13 +794,9 @@ body[data-site="table"][data-from="green"]::before{background:radial-gradient(90
 <div class="layout"><div class="left">
 <div class="card" id="formCard">
 <div><label for="nev">Admin neve</label><div class="nvrow"><input type="text" id="nev" placeholder="Admin név" autocomplete="off"><button class="nvsave" id="nevSave" type="button" title="Név mentése (pipáld be)" aria-label="Admin név mentése" aria-pressed="false" role="checkbox"><span class="nv-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5"/></svg><svg class="ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="nv-t">Név mentése</span></button></div><div class="alvl hidden" id="alvl" aria-live="polite"></div></div>
-<div class="src" id="src">
-<div class="srcrow"><span class="srcico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg></span><span class="srctxt"><b id="srcName">Nincs logmappa kiválasztva</b><small id="srcSub"></small></span><span class="srcbtns"><button class="srcbtn" id="srcBtn" type="button" title="A logs mappa kiválasztása – a böngésző megjegyzi, legközelebb nem kell újra kiválasztani">Mappa kiválasztása</button><button class="srcbtn alt" id="fileBtn" type="button" title="Logfájlok (.txt, .log) kiválasztása – itt a fájlok is látszanak, több is kijelölhető (Ctrl+A)">Fájlok</button></span></div>
-<div class="dfrow"><label class="ck"><input type="checkbox" id="dOn" checked><i></i><span>Szűkítés dátumra</span></label><div class="dfin" id="dfIn"><input type="hidden" id="dFrom"><input type="hidden" id="dTo"><button class="dchip" id="dFromBtn" type="button" aria-haspopup="dialog" aria-label="Kezdő nap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5"/><path d="M16 2.5v4M8 2.5v4M3 10h18"/></svg><span id="dFromTx"></span></button><span class="dsep">–</span><button class="dchip" id="dToBtn" type="button" aria-haspopup="dialog" aria-label="Záró nap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5"/><path d="M16 2.5v4M8 2.5v4M3 10h18"/></svg><span id="dToTx"></span></button><div class="dpop" id="dPop" role="dialog" aria-label="Dátum kiválasztása"></div></div></div>
-</div>
-<input type="file" id="dirIn" webkitdirectory multiple class="hidden">
-<input type="file" id="fileIn" multiple accept=".txt,.log,text/plain" class="hidden">
-<div class="frow hidden" id="frow"><details id="fd"><summary>Betöltött logok <b id="fc"></b></summary><div class="inner flist" id="flist"></div></details></div>
+<div class="drop" id="drop"><b id="fn">Húzd ide a LOG fájlokat</b><br>vagy kattints a tallózáshoz (.log, .txt, több fájl is jöhet)</div>
+<input type="file" id="file" accept=".log,.txt,text/plain" multiple class="hidden">
+<div class="frow hidden" id="frow"><details id="fd"><summary>Feltöltött fájlok <b id="fc"></b></summary><div class="inner flist" id="flist"></div></details><button class="addf" id="addf" type="button" title="További LOG fájlok hozzáadása" aria-label="További LOG fájlok hozzáadása"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button></div>
 <button id="go" class="gobtn" disabled>Elemzés</button>
 <div class="kdrow" id="kdrow"><span class="kdico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="7.5"/><path d="M12 2v5M12 17v5M2 12h5M17 12h5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></span><span class="kdtxt"><b>Kill / Death számolás</b><small class="kdsub">Kapcsold be, és add meg az InGame neved</small><input type="text" id="ign" class="kdign" placeholder="InGame név" autocomplete="off" aria-label="InGame név"></span><label class="switch" title="Kill / Death számolás"><input type="checkbox" id="kd" aria-label="Kill / Death számolás"><i></i></label></div>
 <p class="warn hidden" id="msg"></p>
@@ -1073,12 +1000,6 @@ function rulesMTA(name,ip){
   };
 }
 
-// a kiválasztott logmappa (mappakezelő) megőrzése a böngészőben (IndexedDB), oldalanként
-const IDB=(()=>{let p=null;const open=()=>p||(p=new Promise((res,rej)=>{const r=indexedDB.open("seecalc",1);r.onupgradeneeded=()=>r.result.createObjectStore("h");r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)}));
-  const tx=(mode,fn)=>open().then(db=>new Promise((res,rej)=>{const t=db.transaction("h",mode),q=fn(t.objectStore("h"));t.oncomplete=()=>res(q&&q.result);t.onerror=()=>rej(t.error)}));
-  return {get:k=>tx("readonly",s=>s.get(k)),set:(k,v)=>tx("readwrite",s=>s.put(v,k))}})();
-const idbGet=k=>IDB.get(k).catch(()=>null),idbSet=(k,v)=>IDB.set(k,v).catch(()=>{});
-
 // ===== Egy kalkulátor példány: minden oldalnak saját fájljai, adatai és számolása van =====
 function initCalc(C){
   const root=C.root,$$=id=>document.getElementById(C.P+id);
@@ -1086,164 +1007,20 @@ function initCalc(C){
   root.querySelectorAll("[data-l]").forEach(el=>{const v=C.labels[el.dataset.l];if(v)el.textContent=v});
   root.style.setProperty("--hm",C.heat);
 
-  function check(){$$("go").disabled=!((files.length||hasSrc())&&($$("nev").value.trim()||($$("kd").checked&&$$("ign").value.trim())))}
-  // ===== Logforrás: a logmappát egyszer kell kiválasztani (a böngésző megjegyzi), a fájlnév dátuma alapján szűrünk =====
-  let dirH=null,dirFiles=null,dirLabel="",lastCount=null;
-  const hasSrc=()=>!!(dirH||dirFiles);
-  const isLog=n=>/\.(log|txt)$/i.test(n)||/^log/i.test(n);
-  const dateOf=n=>{const m=n.match(/(\d{4})-(\d{2})-(\d{2})/);return m?m[1]+"-"+m[2]+"-"+m[3]:null};
-  const today=()=>dk(new Date()),monthStart=()=>{const d=new Date();return dk(new Date(d.getFullYear(),d.getMonth(),1))};
-  // dátumszűrő: alapból a hónap 1. napjától máig; egy használat után az utolsó szűrés marad
-  try{const r=JSON.parse(localStorage.getItem(C.key+"-range")||"null");if(r){$$("dFrom").value=r.from||"";$$("dTo").value=r.to||"";$$("dOn").checked=r.on!==false}}catch(e){}
-  if(!$$("dFrom").value)$$("dFrom").value=monthStart();
-  if(!$$("dTo").value)$$("dTo").value=today();
-  const saveRange=()=>{try{localStorage.setItem(C.key+"-range",JSON.stringify({from:$$("dFrom").value,to:$$("dTo").value,on:$$("dOn").checked}))}catch(e){}};
-  // ===== Saját dátumválasztó: csak azok a napok választhatók, amelyekről van log =====
-  let avail=null,dpFor=null,dpMonth=null,dpDirty=false; // avail: a logos napok halmaza ("ÉÉÉÉ-HH-NN"), null = még nincs kiválasztott log
-  const MOL=["január","február","március","április","május","június","július","augusztus","szeptember","október","november","december"];
-  const fmtChip=v=>v?v.replace(/-/g,". ")+".":"–";
-  function dpChips(){$$("dFromTx").textContent=fmtChip($$("dFrom").value);$$("dToTx").textContent=fmtChip($$("dTo").value)}
-  function setAvail(names){avail=new Set(names.filter(isLog).map(dateOf).filter(Boolean));if(dpFor)dpRender()}
-  function dpOpen(which){
-    dpFor=which;const v=$$(which==="from"?"dFrom":"dTo").value||today();dpMonth=v.slice(0,7);
-    // ha ebben a hónapban nincs log, a legközelebbi logos naphoz ugrunk
-    if(avail&&avail.size&&![...avail].some(k=>k.startsWith(dpMonth))){const L=[...avail].sort(),t=new Date(v).getTime();dpMonth=L.reduce((best,k)=>Math.abs(new Date(k)-t)<Math.abs(new Date(best)-t)?k:best,L[0]).slice(0,7)}
-    $$("dFromBtn").classList.toggle("on",which==="from");$$("dToBtn").classList.toggle("on",which==="to");
-    dpRender();$$("dPop").classList.add("open");
-    setTimeout(()=>{const b=$$("dPop").querySelector(".dp-d.end:not(:disabled)")||$$("dPop").querySelector(".dp-d[data-k]:not(:disabled)");if(b)b.focus()},40);
-  }
-  function dpClose(){if(!dpFor)return;dpFor=null;$$("dPop").classList.remove("open");$$("dFromBtn").classList.remove("on");$$("dToBtn").classList.remove("on");
-    if(dpDirty){dpDirty=false;$$("dTo").dispatchEvent(new Event("change"))}}
-  function dpRender(){
-    const [Y,M]=dpMonth.split("-").map(Number),off=(new Date(Y,M-1,1).getDay()+6)%7,nd=new Date(Y,M,0).getDate();
-    const a=$$("dFrom").value,b=$$("dTo").value,td=today(),list=avail?[...avail].sort():null;
-    const minM=list&&list.length?list[0].slice(0,7):null,maxM=list&&list.length?list[list.length-1].slice(0,7):null;
-    let g="";for(let i=0;i<off;i++)g+='<span class="dp-d out"></span>';
-    for(let d=1;d<=nd;d++){
-      const k=Y+"-"+String(M).padStart(2,"0")+"-"+String(d).padStart(2,"0"),has=avail?avail.has(k):true,cls=["dp-d"];
-      if(avail&&has)cls.push("has");
-      if(k===a||k===b)cls.push("end");else if(a&&b&&k>a&&k<b)cls.push("inr");
-      if(k===td)cls.push("today");
-      g+=`<button class="${cls.join(" ")}" type="button" data-k="${k}"${has?"":" disabled"} aria-label="${Y}. ${MOL[M-1]} ${d}.${has?"":", nincs log"}">${d}</button>`;
-    }
-    const cnt=list?list.filter(k=>k.startsWith(dpMonth)).length:null;
-    $$("dPop").innerHTML=`<div class="dp-h"><button class="dp-nav" type="button" data-nav="-1" aria-label="Előző hónap"${minM&&dpMonth<=minM?" disabled":""}>‹</button><div class="dp-t">${Y}. ${MOL[M-1]}<small>${dpFor==="from"?"Kezdő nap":"Záró nap"}${cnt!=null?" · "+cnt+" logos nap":""}</small></div><button class="dp-nav" type="button" data-nav="1" aria-label="Következő hónap"${maxM&&dpMonth>=maxM?" disabled":""}>›</button></div>`
-      +`<div class="dp-w">${DOW.map(x=>`<span>${x}</span>`).join("")}</div><div class="dp-g">${g}</div>`
-      +`<div class="dp-f"><button class="dp-q" type="button" data-q="month">Ez a hónap</button><button class="dp-q" type="button" data-q="prev">Előző hónap</button>${list&&list.length?'<button class="dp-q" type="button" data-q="all">Összes log</button>':""}</div>`
-      +(avail?"":'<p class="dp-note">A logok kiválasztása után csak azok a napok választhatók, amelyekről van log.</p>');
-  }
-  function setRange(a,b){$$("dFrom").value=a;$$("dTo").value=b;dpChips();dpDirty=true}
-  $$("dPop").addEventListener("click",e=>{
-    e.stopPropagation();
-    const n=e.target.closest("[data-nav]");
-    if(n){const [Y,M]=dpMonth.split("-").map(Number),d=new Date(Y,M-1+(+n.dataset.nav),1);dpMonth=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");dpRender();return}
-    const q=e.target.closest("[data-q]");
-    if(q){const t=new Date();let a,b;
-      if(q.dataset.q==="month"){a=monthStart();b=today()}
-      else if(q.dataset.q==="prev"){a=dk(new Date(t.getFullYear(),t.getMonth()-1,1));b=dk(new Date(t.getFullYear(),t.getMonth(),0))}
-      else{const L=[...avail].sort();a=L[0];b=L[L.length-1]}
-      setRange(a,b);dpClose();return}
-    const d=e.target.closest(".dp-d[data-k]");if(!d||d.disabled)return;
-    const k=d.dataset.k;let a=$$("dFrom").value,b=$$("dTo").value;
-    if(dpFor==="from"){a=k;if(b&&b<a)b=k;setRange(a,b);dpOpen("to")} // a kezdő nap után rögtön a záró napot kérjük
-    else{b=k;if(a&&a>b)a=k;setRange(a,b);dpClose()}
-  });
-  $$("dFromBtn").onclick=e=>{e.stopPropagation();dpFor==="from"?dpClose():dpOpen("from")};
-  $$("dToBtn").onclick=e=>{e.stopPropagation();dpFor==="to"?dpClose():dpOpen("to")};
-  document.addEventListener("click",()=>dpClose());
-  document.addEventListener("keydown",e=>{if(e.key==="Escape")dpClose()});
-  dpChips();
-  const inRange=n=>{if(!$$("dOn").checked)return true;const d=dateOf(n);if(!d)return false;const a=$$("dFrom").value,b=$$("dTo").value;return(!a||d>=a)&&(!b||d<=b)};
-  function updSrc(note,cls){
-    const name=dirH?dirH.name+" mappa":dirFiles?dirLabel:"";
-    $$("src").classList.toggle("set",!!name);
-    $$("srcName").textContent=name||"Nincs logmappa kiválasztva";
-    $$("srcBtn").textContent=dirH?"Mappa cseréje":"Mappa kiválasztása";
-    const sub=$$("srcSub");sub.className=cls||"";
-    sub.textContent=note||(!name?C.srcHint:lastCount!=null?lastCount+" log betöltve a szűrt időszakból":dirH?"Elmentve · az Elemzés magától betölti a logokat":"Kattints az Elemzésre");
-    sub.title=sub.textContent;
-    check();
-  }
-  // kiválasztás után azonnal megmutatjuk, hány logfájlt találtunk (a fájlokat még nem olvassuk be)
-  async function srcNames(){
-    if(dirH){const L=[];for await(const [n,fh] of dirH.entries())if(fh.kind==="file")L.push(n);return L}
-    return dirFiles?dirFiles.map(f=>f.name):[];
-  }
-  const fmtShort=d=>d.replace(/-/g,".");
-  async function afterPick(){
-    lastCount=null;let names=[];
-    try{names=await srcNames()}catch(e){}
-    const logs=names.filter(isLog),dated=logs.map(dateOf).filter(Boolean).sort(),inR=logs.filter(inRange).length;
-    setAvail(names);
-    if(!logs.length){updSrc("Nincs köztük logfájl (.txt / .log)");return}
-    updSrc(logs.length+" logfájl"+(dated.length?" ("+fmtShort(dated[0])+" – "+fmtShort(dated[dated.length-1])+")":"")+" · "+inR+" a szűrt időszakban","ok");
-    if(inR&&!$$("go").disabled)analyze(); // ha a név is megvan, rögtön elemez
-  }
-  async function pickDir(){
-    if(window.showDirectoryPicker){
-      try{const h=await window.showDirectoryPicker({id:"logs"+(C.P||"rpg"),mode:"read"});dirH=h;dirFiles=null;idbSet(C.key,h);afterPick();return}
-      catch(e){if(e&&e.name==="AbortError")return}
-    }
-    $$("dirIn").click(); // tartalék: hagyományos mappatallózás (ezt a böngésző nem tudja megjegyezni)
-  }
-  // mappa: a böngésző megjegyzi; Fájlok: a txt logok is látszanak a választóban
-  $$("srcBtn").onclick=pickDir;
-  $$("fileBtn").onclick=()=>$$("fileIn").click();
-  $$("dirIn").onchange=e=>{const L=[...e.target.files];e.target.value="";if(!L.length)return;dirFiles=L;dirH=null;dirLabel=((L[0].webkitRelativePath||"").split("/")[0]||"logok")+" mappa";afterPick()};
-  $$("fileIn").onchange=e=>{const L=[...e.target.files];e.target.value="";if(!L.length)return;dirFiles=L;dirH=null;dirLabel="Kiválasztott fájlok ("+L.length+")";afterPick()};
-  // fájlokat továbbra is rá lehet húzni a kártyára (erre a látogatásra)
-  const fCard=$$("formCard");
-  ["dragover","dragenter"].forEach(t=>fCard.addEventListener(t,e=>{e.preventDefault();fCard.classList.add("over")}));
-  fCard.addEventListener("dragleave",e=>{if(!fCard.contains(e.relatedTarget))fCard.classList.remove("over")});
-  // egy egész mappát is rá lehet húzni (felugró ablak nélkül)
-  const readDir=dir=>new Promise(res=>{const r=dir.createReader(),out=[];const next=()=>r.readEntries(es=>{if(!es.length)return res(out);out.push(...es);next()},()=>res(out));next()});
-  fCard.addEventListener("drop",async e=>{e.preventDefault();fCard.classList.remove("over");
-    const items=[...(e.dataTransfer.items||[])],ents=items.map(i=>i.webkitGetAsEntry&&i.webkitGetAsEntry()).filter(Boolean);
-    let L=[...e.dataTransfer.files],label="Behúzott fájlok";
-    const dir=ents.find(x=>x.isDirectory);
-    if(dir){const es=(await readDir(dir)).filter(x=>x.isFile);L=await Promise.all(es.map(x=>new Promise(r=>x.file(r,()=>r(null)))));L=L.filter(Boolean);label=dir.name+" mappa"}
-    if(!L.length)return;dirFiles=L;dirH=null;dirLabel=label==="Behúzott fájlok"?label+" ("+L.length+")":label;afterPick()});
-  // csak a szűrt dátumú fájlokat olvassuk be (a fájlnévből: log-ÉÉÉÉ-HH-NN)
-  async function gather(){
-    if(dirH){
-      let p=await dirH.queryPermission({mode:"read"});
-      if(p!=="granted")p=await dirH.requestPermission({mode:"read"});
-      if(p!=="granted")throw new Error("perm");
-      const out=[],all=[];
-      for await(const [n,fh] of dirH.entries())if(fh.kind==="file"){all.push(n);if(isLog(n)&&inRange(n))out.push(await fh.getFile())}
-      setAvail(all);return out;
-    }
-    if(!dirFiles)return null;
-    setAvail(dirFiles.map(f=>f.name));
-    return dirFiles.filter(f=>isLog(f.name)&&inRange(f.name));
-  }
-  // egyszerre csak egy elemzés fut (dupla kattintás / automatikus újraszámolás nem akad össze)
-  let busy=false,again=false;
-  async function analyze(){
-    if(busy){again=true;return}
-    busy=true;const go=$$("go");go.classList.add("busy");go.textContent="Betöltés…";
-    try{
-      if(hasSrc()){
-        let L;
-        try{L=await gather()}catch(e){updSrc("Nincs hozzáférés a logokhoz · válaszd ki újra őket");return}
-        files=[];const bad=await load(L);render();lastCount=L.length-bad.length;saveRange();updSrc();
-        if(!L.length){$$("msg").textContent="A kiválasztott időszakban nincs logfájl.";$$("msg").classList.remove("hidden");return}
-        if(files.length)run();
-        if(bad.length){$$("msg").textContent=bad.length+" logot nem sikerült beolvasni ("+bad.join(", ")+"). Ha közben frissült (pl. a mai log), jelöld ki újra a logokat.";$$("msg").classList.remove("hidden")}
-        return;
-      }
-      if(files.length)run();
-    }finally{busy=false;go.classList.remove("busy");go.textContent="Elemzés";if(again){again=false;analyze()}}
-  }
+  function check(){$$("go").disabled=!(files.length&&($$("nev").value.trim()||($$("kd").checked&&$$("ign").value.trim())))}
+  $$("drop").onclick=()=>$$("file").click();
+  $$("addf").onclick=()=>$$("file").click();
+  $$("file").onchange=e=>load(e.target.files);
+  // a fájlokat az egész űrlapkártyára rá lehet húzni
+  const fCard=$$("formCard"),dragOff=()=>{fCard.classList.remove("over");$$("drop").classList.remove("over")};
+  ["dragover","dragenter"].forEach(t=>fCard.addEventListener(t,e=>{e.preventDefault();fCard.classList.add("over");$$("drop").classList.add("over")}));
+  fCard.addEventListener("dragleave",e=>{if(!fCard.contains(e.relatedTarget))dragOff()});
+  fCard.addEventListener("drop",e=>{e.preventDefault();dragOff();load(e.dataTransfer.files)});
 
-  // a játék épp írhatja a mai logot: olvasási hibánál kétszer újrapróbáljuk, ami így sem megy, azt kihagyjuk és jelezzük
-  const readBuf=async f=>{for(let i=0;i<3;i++){try{return await f.arrayBuffer()}catch(e){await new Promise(r=>setTimeout(r,250))}}return null};
   async function load(list){
-    const bad=[];
-    if(!list||!list.length)return bad;
+    if(!list||!list.length)return;
     for(const f of [...list]){
-      const buf=await readBuf(f);
-      if(!buf){bad.push(f.name);continue}
+      const buf=await f.arrayBuffer();
       let t=new TextDecoder("utf-8").decode(buf);
       if(t.includes("\uFFFD"))t=new TextDecoder("windows-1250").decode(buf);
       let a=null,b=null;
@@ -1251,13 +1028,14 @@ function initCalc(C){
       files.push({name:f.name,size:f.size,text:t,a,b});
     }
     files.sort((a,b)=>a.name.localeCompare(b.name,"hu",{numeric:true}));
-    render();return bad;
+    render();
   }
   function render(){
     const seen=new Set();files.forEach(f=>{f.dup=seen.has(f.text);seen.add(f.text)});const nd=files.filter(f=>f.dup).length;
-    $$("flist").innerHTML=files.map((f,i)=>`<div class="fl"><span>${f.dup?'<span class="dup" title="Duplikáció">!</span>':""}${f.name.replace(/</g,"&lt;")}<small>${f.dup?"Duplikáció, nem számolom bele · ":""}${f.a?fmtD(f.a)+" – "+fmtD(f.b):"nem találtam időbélyeget"}</small></span></div>`).join("");
-    $$("fc").textContent=files.length+" fájl"+(nd?" · "+nd+" duplikáció (!)":"");if(nd)$$("fd").open=true;
-    $$("frow").classList.toggle("hidden",!files.length);check();
+    $$("flist").innerHTML=files.map((f,i)=>`<div class="fl"><span>${f.dup?'<span class="dup" title="Duplikáció">!</span>':""}${f.name.replace(/</g,"&lt;")}<small>${f.dup?"Duplikáció, nem számolom bele · ":""}${f.a?fmtD(f.a)+" – "+fmtD(f.b):"nem találtam időbélyeget"}</small></span><button class="del" data-i="${i}" title="Törlés" aria-label="Törlés"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 11v6M14 11v6"/></svg></button></div>`).join("");
+    $$("flist").querySelectorAll(".del").forEach(b=>b.onclick=()=>{files.splice(+b.dataset.i,1);render()});
+    $$("file").value="";$$("fc").textContent=files.length+" fájl"+(nd?" · "+nd+" duplikáció (!)":"");if(nd)$$("fd").open=true;
+    $$("frow").classList.toggle("hidden",!files.length);$$("drop").classList.toggle("hidden",!!files.length);check();
   }
 
   function renderLists(){
@@ -1397,7 +1175,7 @@ function initCalc(C){
     updStatus();
     if(!autoRun)$$("res").scrollIntoView({behavior:"smooth",block:matchMedia(DESK).matches?"nearest":"start"});
   }
-  $$("go").onclick=analyze;
+  $$("go").onclick=run;
 
   // K/D: bekapcsolva a sorban megjelenik az InGame név mező; a panel kikapcsolva is látszik, „inaktív” jelzéssel
   function kdUI(){const on=$$("kd").checked;$$("kdrow").classList.toggle("on",on);$$("kdSec").classList.toggle("off",!(on&&$$("ign").value.trim()));
@@ -1416,18 +1194,10 @@ function initCalc(C){
     if(!$$("res").classList.contains("hidden")&&!$$("go").disabled)autoT=setTimeout(()=>{autoRun=true;run();autoRun=false},450)}
   ["nev","ign"].forEach(id=>$$(id).addEventListener("input",onSet));
   $$("kd").addEventListener("change",onSet);
-  root.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.tagName==="INPUT"&&e.target.type==="text"&&!$$("go").disabled)analyze()});
-  // dátum módosítására nem számolunk újra: az új szűrés csak az Elemzés gombra érvényesül
-  ["dFrom","dTo","dOn"].forEach(id=>$$(id).addEventListener("change",()=>{$$("dfIn").classList.toggle("off",!$$("dOn").checked)}));
-  $$("dfIn").classList.toggle("off",!$$("dOn").checked);
-  nevUI();kdUI();renderLists();fitBook();updSrc();
-  // elmentett logmappa: ha a böngésző már engedi, magától betölti és elemzi
-  idbGet(C.key).then(async hd=>{if(!hd||dirH||dirFiles)return;dirH=hd;updSrc();
-    try{const p=await hd.queryPermission({mode:"read"});
-      if(p==="granted"){if(!$$("go").disabled){autoRun=true;try{await analyze()}finally{autoRun=false}}}
-      else updSrc("Elmentve · kattints az Elemzésre a logok betöltéséhez")}catch(e){}});
+  root.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.tagName==="INPUT"&&e.target.type==="text"&&!$$("go").disabled)run()});
+  nevUI();kdUI();check();renderLists();fitBook();
   // a jobb alsó sávban a mentett név látszik (nem „Vendég”), amíg át nem írja
-  return {fitBook,load,run,analyze,get name(){return doneName||(savedOn&&$$("nev").value.trim())||""}};
+  return {fitBook,load,run,get name(){return doneName||(savedOn&&$$("nev").value.trim())||""}};
 }
 
 // jobb alsó sáv: SeeRPG | név | dátum (a 2. oldalon SeeMTA)
@@ -1439,8 +1209,8 @@ function updStatus(){
   $("stTime").textContent=new Date().toLocaleString("hu-HU",{year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit"});
 }
 CALCS={
-  rpg:initCalc({root:$("page"),P:"",key:"seerpg-calc",srcHint:"Pl.: C:\\ProgramData\\SeeRPG\\logs",rules:rulesRPG,cur:"Ft",pt:"SP",heat:"240,200,80",years:[2026],goal:{duty:3000,off:2000},labels:{}}),
-  mta:initCalc({root:$("page2"),P:"g_",key:"seemta-calc",srcHint:"Válaszd ki a SeeMTA logok mappáját",rules:rulesMTA,cur:"$",pt:"PP",heat:"52,211,153",years:[2026,2025,2024,2023,2022],goal:{duty:3000,off:2000},
+  rpg:initCalc({root:$("page"),P:"",key:"seerpg-calc",rules:rulesRPG,cur:"Ft",pt:"SP",heat:"240,200,80",years:[2026],goal:{duty:3000,off:2000},labels:{}}),
+  mta:initCalc({root:$("page2"),P:"g_",key:"seemta-calc",rules:rulesMTA,cur:"$",pt:"PP",heat:"52,211,153",years:[2026,2025,2024,2023,2022],goal:{duty:3000,off:2000},
     labels:{payTitle:"Kamat",pay1:"Összes jóváírás",pay2:"Összes PP",pay3:"Megérkezett kamatok"}})
 };
 updStatus();setInterval(updStatus,15000);
