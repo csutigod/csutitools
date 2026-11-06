@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!-- saved from url=(0022)https://csutitools.hu/ -->
 <html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://abacus.jasoncameron.dev; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://abacus.jasoncameron.dev https://hmbarsvxcczubhunyuao.supabase.co; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -632,6 +632,7 @@ button.dn-x:hover:not(:disabled),button.dn-x:focus-visible{transform:translateY(
 .npop:hover{transform:translateY(-2px);border-color:rgba(var(--npc),.7);box-shadow:0 22px 52px rgba(0,0,0,.65),0 0 34px rgba(var(--npc),.2)}
 .npop::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,rgb(var(--npc)),rgba(var(--npc),.15))}
 .npop.cl{--npc:240,100,90}
+.npop.rec{--npc:61,220,132}
 .npop.out{animation:npout .25s ease forwards}
 @keyframes npin{from{opacity:0;transform:translateX(24px) scale(.96)}to{opacity:1;transform:none}}
 @keyframes npout{to{opacity:0;transform:translateX(18px) scale(.96)}}
@@ -1053,6 +1054,17 @@ input.tbl-title{min-width:0;flex-basis:100%}
 .sites button:hover img,.sites button:focus-visible img{filter:drop-shadow(0 0 10px rgba(var(--tc),.75)) drop-shadow(0 0 22px rgba(var(--tc),.4))}
 @keyframes siteGlow{0%,100%{opacity:1;transform:translate(-50%,-50%) scale(1)}50%{opacity:.65;transform:translate(-50%,-50%) scale(1.12)}}
 @media(prefers-reduced-motion:reduce){.sites button:hover::before{animation:none}}
+
+/* ===== Reports: kötelező játékosnév ===== */
+.rpm-name{display:flex;flex-direction:column;align-items:center;gap:6px;margin:14px auto 0;max-width:340px}
+.rpm-name label{color:var(--accent);font-size:.72rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin:0}
+.rpm-name input{width:100%;padding:11px 14px;border:1px solid rgba(255,255,255,.22);border-radius:12px;background:rgba(10,10,10,.7);color:#fff;font-size:1rem;font-weight:700;text-align:center;outline:none}
+.rpm-name input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(var(--acc),.2)}
+.rpm-name small{color:#aeb6bf;font-size:.74rem}
+.rpm-name.err input{border-color:#ff4d61;box-shadow:0 0 0 3px rgba(255,77,97,.25)}
+.rpm-name.err small{color:#ff8a96;font-weight:700}
+.rpm-name.err{animation:rpshake .4s}
+@keyframes rpshake{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
 </style>
 </head>
 <body data-site="see" style="--bgc: 59,221,206; --bgi: 1; --bgc2: 59,221,206;">
@@ -1260,7 +1272,7 @@ input.tbl-title{min-width:0;flex-basis:100%}
 <div class="rpmode" id="rpMode" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="rpmT">
 <div class="rpm-in">
 <button class="rpb rpm-x" id="rpMX" type="button" title="Bezárás" aria-label="Bezárás">×</button>
-<div class="rpm-h"><span class="rpm-k">Reports <i>V1.5</i></span><h2 id="rpmT">Válassz nehézséget</h2></div>
+<div class="rpm-h"><span class="rpm-k">Reports <i>V1.5</i></span><h2 id="rpmT">Válassz nehézséget</h2><div class="rpm-name" id="rpmName"><label for="rpName">Játékosneved</label><input type="text" id="rpName" maxlength="24" autocomplete="off" spellcheck="false" placeholder="Írd be a neved a játékhoz"><small id="rpNameHint">Ezzel a névvel kerülsz fel a toplistára.</small></div></div>
 <div class="rpm-grid">
 <button class="rpm-card easy" type="button" data-mode="easy"><span class="rpm-bg" aria-hidden="true"></span><span class="rpm-c"><span class="rpm-t">EASY</span><span class="rpm-d">A megszokott Reports, csak pörgősebben: új report 5–8 másodpercenként. Itt a gyors reakció számít.</span><span class="rpm-best" data-best="easy"></span><span class="rpm-go">Indítás →</span></span></button>
 <button class="rpm-card hard" type="button" data-mode="hard"><span class="rpm-bg" aria-hidden="true"></span><span class="rpm-c"><span class="rpm-t">HARD</span><span class="rpm-d">Elvállalás után fejből vissza kell írnod a bejelentés leírását. Ha több mint 10 karakterrel eltér, a reakcióidő érvénytelen. Külön toplista.</span><span class="rpm-best" data-best="hard"></span><span class="rpm-go">Indítás →</span></span></button>
@@ -1858,6 +1870,7 @@ const pops={};
 const npKey=(k,id)=>"seerpg-pop-x-"+k+":"+id;
 function hidePop(k,seen){const el=pops[k];if(!el)return;delete pops[k];el.classList.add("out");setTimeout(()=>el.remove(),260)}
 const NP_ARR='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+NP_ICO.rec='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>';
 function mkPop(k,id,tag,head,sub,go){
   try{if(sessionStorage.getItem(npKey(k,id)))return}catch(e){}
   const el=document.createElement("div");el.className="npop "+k;el.setAttribute("role","status");
@@ -1917,40 +1930,60 @@ function toast(m){const t=$("rpToast");t.textContent=m;t.classList.add("show");c
 function updRec(){const r=recs[mode];$("rpRec").innerHTML=r?'Rekord: <b>'+fmtR(r.ms)+'</b>':'Még nincs rekord'}
 const buzz=()=>{if(snd()){tone(330,0,.14,.12);tone(220,.14,.24,.12)}};
 // ---- rekordok: globális (megosztott tároló), ha nem elérhető, akkor ezen az eszközön – módonként külön
-let db=null,uid=null,canWrite=null;
+// Közös toplista: Supabase (records tábla). Az anon kulcs nyilvános, erre való; írni csak új sort lehet, törölni/átírni nem.
+const SB_URL="https://hmbarsvxcczubhunyuao.supabase.co",SB_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhtYmFyc3Z4Y2N6dWJodW55dWFvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM5NzQ0NjksImV4cCI6MjEwOTU1MDQ2OX0.Ra84lY8pvCBQVrv29zZsUZFpV6VBzII-3KmK6QFTM6E",SB_H={apikey:SB_KEY,Authorization:"Bearer "+SB_KEY};
+let canWrite=null,lastSend=0,recNew=false;const mine=new Set();
 const getTop=()=>sharedM[mode]!==null?sharedM[mode]:tops[mode];
-const myName=()=>{const n=($("nev")&&$("nev").value||"").trim();return n||"Vendég"};
+const cleanName=v=>String(v||"").replace(/[\u0000-\u001f<>]/g,"").replace(/\s+/g," ").trim().slice(0,24);
+const myName=()=>cleanName($("rpName").value);
+const nameOk=()=>{const n=myName();return n.length>=2&&!/^vend[eé]g$/i.test(n)};
+try{$("rpName").value=cleanName(localStorage.getItem("seerpg-rp-name")||"")}catch(e){}
+$("rpName").addEventListener("input",()=>{$("rpmName").classList.remove("err");$("rpNameHint").textContent="Ezzel a névvel kerülsz fel a toplistára.";try{localStorage.setItem("seerpg-rp-name",myName())}catch(e){}});
+const recKey=x=>x?x.name+"|"+x.ms+"|"+x.at:"";
 function renderTop(){
   const L=getTop(),cls=["","s","b"];
   $("rpTopSrc").textContent=MK[mode].n+" · "+(sharedM[mode]!==null?'globális'+(canWrite===false?' · csak olvasható':''):'ezen az eszközön');
   $("rpTop").innerHTML=[0,1,2].map(i=>{const x=L[i];return '<div class="tp'+(x?'':' e')+'"><b class="'+cls[i]+'">'+(i+1)+'</b>'+(x?'<span class="n">'+esc(x.name||"Vendég")+'</span><span class="m">'+fmtR(x.ms)+'</span>':'<span class="n">még üres</span>')+'</div>'}).join("");
 }
 function submit(ms){
-  const m=mode,entry={name:myName(),ms:ms,at:Date.now()};
+  const m=mode,entry={name:myName(),ms:Math.round(ms),at:Date.now()};
   tops[m].push(entry);tops[m].sort((a,b)=>a.ms-b.ms);tops[m]=tops[m].slice(0,3);
   try{localStorage.setItem(MK[m].top,JSON.stringify(tops[m]))}catch(e){}
   if(sharedM[m]===null)renderTop();
-  if(!db||!uid)return;
   const L=sharedM[m]||[];
-  if(L.length>=3&&ms>=L[2].ms)return;
-  const dropId=L.length>=3?L[2].uid:null,col=MK[m].col;
-  try{db.doc(col+"/"+uid+"_"+Date.now().toString(36)).set(entry)
-    .then(()=>{canWrite=true;if(dropId){try{db.doc(col+"/"+dropId).delete().catch(()=>{})}catch(e){}}})
-    .catch(()=>{canWrite=false;renderTop()})}catch(e){canWrite=false}
+  if(entry.ms<150||entry.ms>600000||(L.length>=3&&entry.ms>=L[2].ms))return; // csak ami felkerülhet a TOP 3-ba
+  if(Date.now()-lastSend<3000)return;lastSend=Date.now();
+  mine.add(entry.name+"|"+entry.ms);
+  fetch(SB_URL+"/rest/v1/records",{method:"POST",headers:Object.assign({"Content-Type":"application/json",Prefer:"return=minimal"},SB_H),body:JSON.stringify({mode:m,name:entry.name,ms:entry.ms})})
+    .then(r=>{canWrite=r.ok;if(r.ok)poll();else renderTop()}).catch(()=>{canWrite=false;renderTop()});
 }
-function initDb(){
-  if(!(window.claude&&claude.use))return;
-  Promise.all([claude.use("db"),claude.use("user")]).then(async r=>{
-    if(!r[0])return;db=r[0];try{uid=r[1]?await r[1].id():null}catch(e){uid=null}
-    ["easy","hard"].forEach(m=>{try{db.collection(MK[m].col).orderBy("ms","asc").limit(3).onSnapshot(sn=>{sharedM[m]=sn.docs.map(x=>Object.assign({uid:x.id},x.data())).filter(x=>typeof x.ms==="number"&&isFinite(x.ms)&&x.ms>0).map(x=>({uid:x.uid,ms:x.ms,name:String(x.name||"Vendég").slice(0,40)}));
-      if(m===mode){renderTop();const c=cur();if(!$("rpDet").hidden&&!(c&&c.acc&&!c.checked))renderDet()}},()=>{sharedM[m]=null;if(m===mode)renderTop()})}catch(e){}});
-  }).catch(()=>{});
+// új rekord jelzése: ha valaki más állította be a legjobb időt, amióta utoljára néztük
+function notifyRec(m,x){
+  recNew=true;updCount();
+  if(typeof mkPop==="function")mkPop("rec",m+recKey(x),"Reports · "+MK[m].n,"Új rekord: "+fmtR(x.ms),x.name+" állította be",()=>{const b=$("rpBtn");if(b)b.click()});
 }
+async function pollMode(m){
+  const r=await fetch(SB_URL+"/rest/v1/records?select=name,ms,created_at&mode=eq."+m+"&order=ms.asc,created_at.asc&limit=3",{headers:SB_H,cache:"no-store"});
+  if(!r.ok)throw 0;const j=await r.json();if(!Array.isArray(j))throw 0;
+  const L=j.filter(x=>x&&typeof x.ms==="number"&&isFinite(x.ms)&&x.ms>0).map(x=>({ms:x.ms,name:String(x.name||"Vendég").slice(0,24),at:String(x.created_at||"")}));
+  sharedM[m]=L;
+  const k="seerpg-rp-seen-"+m,top=L[0];let seen="";try{seen=localStorage.getItem(k)||""}catch(e){}
+  if(top&&recKey(top)!==seen){try{localStorage.setItem(k,recKey(top))}catch(e){}
+    if(seen&&!mine.has(top.name+"|"+top.ms))notifyRec(m,top)}
+}
+let pollBusy=false;
+function poll(){
+  if(pollBusy)return;pollBusy=true;lastPoll=Date.now();
+  Promise.all(["easy","hard"].map(m=>pollMode(m).catch(()=>{sharedM[m]=null})))
+    .then(()=>{pollBusy=false;renderTop();const c=cur();if(isOpen&&!$("rpDet").hidden&&c&&c.checked)renderDet()});
+}
+let lastPoll=0;
+function initDb(){poll();setInterval(()=>{if(document.hidden)return;if(isOpen||chOpen()||Date.now()-lastPoll>30000)poll()},8000);document.addEventListener("visibilitychange",()=>{if(!document.hidden)poll()})}
 function recLine(r){const g=getTop()[0];
   if(r.isRec)return 'Te állítottad be a jelenlegi legjobb időt'+(sharedM[mode]!==null?' a globális listán':'')+'.';
   return (g?'Rekord: '+fmtR(g.ms)+' ('+esc(g.name||"Vendég")+')':'')+' · a rekord megdöntéséhez ennél gyorsabb kell'}
 const openList=()=>reports.filter(r=>!r.acc);
-function updCount(){const n=openList().length;$("rpCnt").textContent=n;$("rpDot").classList.toggle("on",n>0&&!isOpen)}
+function updCount(){const n=openList().length;$("rpCnt").textContent=n;$("rpDot").classList.toggle("on",(n>0&&!isOpen)||recNew)}
 
 function renderList(){
   updCount();
@@ -2051,17 +2084,20 @@ function close(){
 // mód választása a Reports megnyitása előtt
 const chOpen=()=>$("rpMode").classList.contains("open");
 function openChooser(){
-  lastFocus=document.activeElement;
+  lastFocus=document.activeElement;recNew=false;updCount();if(typeof hidePop==="function")hidePop("rec");poll();
   $("rpMode").querySelectorAll("[data-best]").forEach(el=>{const r=recs[el.dataset.best];el.textContent=r?"Legjobb időd: "+fmtR(r.ms):"Még nincs rekordod"});
   $("rpMode").classList.add("open");$("rpMode").setAttribute("aria-hidden","false");$("rpBtn").setAttribute("aria-expanded","true");
-  setTimeout(()=>$("rpMode").querySelector(".rpm-card").focus(),60);
+  if(!myName()){const n=cleanName(($("nev")&&$("nev").value)||($("pign")&&$("pign").value));if(n)$("rpName").value=n}
+  setTimeout(()=>(nameOk()?$("rpMode").querySelector(".rpm-card"):$("rpName")).focus(),60);
 }
 function closeChooser(back){
   $("rpMode").classList.remove("open");$("rpMode").setAttribute("aria-hidden","true");
   if(back){$("rpBtn").setAttribute("aria-expanded","false");if(lastFocus&&lastFocus.focus)lastFocus.focus()}
 }
 $("rpMode").addEventListener("click",e=>{
-  const c=e.target.closest("[data-mode]");if(c){closeChooser(false);open(c.dataset.mode);return}
+  const c=e.target.closest("[data-mode]");
+  if(c){if(!nameOk()){const w=$("rpmName");w.classList.remove("err");void w.offsetWidth;w.classList.add("err");$("rpNameHint").textContent="Vendégként nem játszhatsz – írd be a neved (legalább 2 karakter).";$("rpName").focus();return}
+    try{localStorage.setItem("seerpg-rp-name",myName())}catch(e){}closeChooser(false);open(c.dataset.mode);return}
   if(e.target===$("rpMode")||e.target.closest("#rpMX"))closeChooser(true);
 });
 $("rpBtn").onclick=()=>{if(isOpen)close();else if(chOpen())closeChooser(true);else openChooser()};
