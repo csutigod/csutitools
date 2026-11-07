@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!-- saved from url=(0022)https://csutitools.hu/ -->
 <html lang="hu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://abacus.jasoncameron.dev https://hmbarsvxcczubhunyuao.supabase.co; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://hmbarsvxcczubhunyuao.supabase.co; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -1930,7 +1930,8 @@ function toast(m){const t=$("rpToast");t.textContent=m;t.classList.add("show");c
 function updRec(){const r=recs[mode];$("rpRec").innerHTML=r?'Rekord: <b>'+fmtR(r.ms)+'</b>':'Még nincs rekord'}
 const buzz=()=>{if(snd()){tone(330,0,.14,.12);tone(220,.14,.24,.12)}};
 // ---- rekordok: globális (megosztott tároló), ha nem elérhető, akkor ezen az eszközön – módonként külön
-// Közös toplista: Supabase (records tábla). Az anon kulcs nyilvános, erre való; írni csak új sort lehet, törölni/átírni nem.
+// Közös toplista: Supabase. A records táblát közvetlenül nem lehet írni/olvasni, csak az rp_submit / rp_top függvényeken át,
+// amelyek a szerveren ellenőrzik az időt (EASY ≥ 0,7 mp, HARD ≥ 1,5 mp), IP-nként korlátozzák a beküldést, és IP-nként 1 sort tartanak meg.
 const SB_URL="https://hmbarsvxcczubhunyuao.supabase.co",SB_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhtYmFyc3Z4Y2N6dWJodW55dWFvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM5NzQ0NjksImV4cCI6MjEwOTU1MDQ2OX0.Ra84lY8pvCBQVrv29zZsUZFpV6VBzII-3KmK6QFTM6E",SB_H={apikey:SB_KEY,Authorization:"Bearer "+SB_KEY};
 let canWrite=null,lastSend=0,recNew=false;const mine=new Set();
 const getTop=()=>sharedM[mode]!==null?sharedM[mode]:tops[mode];
@@ -1951,11 +1952,12 @@ function submit(ms){
   try{localStorage.setItem(MK[m].top,JSON.stringify(tops[m]))}catch(e){}
   if(sharedM[m]===null)renderTop();
   const L=sharedM[m]||[];
-  if(entry.ms<150||entry.ms>600000||(L.length>=3&&entry.ms>=L[2].ms))return; // csak ami felkerülhet a TOP 3-ba
+  if(entry.ms<(m==="hard"?1500:700)||entry.ms>600000||(L.length>=3&&entry.ms>=L[2].ms))return; // csak ami felkerülhet a TOP 3-ba
   if(Date.now()-lastSend<3000)return;lastSend=Date.now();
   mine.add(entry.name+"|"+entry.ms);
-  fetch(SB_URL+"/rest/v1/records",{method:"POST",headers:Object.assign({"Content-Type":"application/json",Prefer:"return=minimal"},SB_H),body:JSON.stringify({mode:m,name:entry.name,ms:entry.ms})})
-    .then(r=>{canWrite=r.ok;if(r.ok)poll();else renderTop()}).catch(()=>{canWrite=false;renderTop()});
+  fetch(SB_URL+"/rest/v1/rpc/rp_submit",{method:"POST",headers:Object.assign({"Content-Type":"application/json"},SB_H),body:JSON.stringify({p_mode:m,p_name:entry.name,p_ms:entry.ms})})
+    .then(r=>r.ok?r.json().then(res=>{canWrite=true;if(res==="rate")toast("Túl sok beküldés – próbáld kicsit később");poll()}):(canWrite=false,renderTop()))
+    .catch(()=>{canWrite=false;renderTop()});
 }
 // új rekord jelzése: ha valaki más állította be a legjobb időt, amióta utoljára néztük
 function notifyRec(m,x){
@@ -1963,7 +1965,7 @@ function notifyRec(m,x){
   if(typeof mkPop==="function")mkPop("rec",m+recKey(x),"Reports · "+MK[m].n,"Új rekord: "+fmtR(x.ms),x.name+" állította be",()=>{const b=$("rpBtn");if(b)b.click()});
 }
 async function pollMode(m){
-  const r=await fetch(SB_URL+"/rest/v1/records?select=name,ms,created_at&mode=eq."+m+"&order=ms.asc,created_at.asc&limit=3",{headers:SB_H,cache:"no-store"});
+  const r=await fetch(SB_URL+"/rest/v1/rpc/rp_top",{method:"POST",headers:Object.assign({"Content-Type":"application/json"},SB_H),body:JSON.stringify({p_mode:m}),cache:"no-store"});
   if(!r.ok)throw 0;const j=await r.json();if(!Array.isArray(j))throw 0;
   const L=j.filter(x=>x&&typeof x.ms==="number"&&isFinite(x.ms)&&x.ms>0).map(x=>({ms:x.ms,name:String(x.name||"Vendég").slice(0,24),at:String(x.created_at||"")}));
   sharedM[m]=L;
@@ -2122,14 +2124,16 @@ updRec();updCount();renderTop();initDb();
 </script>
 
 <script>
-// ===== Látogatók eddig: közös számláló mindenkinek (abacus.jasoncameron.dev); egy böngésző 1 percen belül legfeljebb 1-gyel növelheti =====
+// ===== Látogatók eddig: közös számláló (Supabase visit_hit). A szerver IP-nként 5 percenként legfeljebb 1 látogatást számol,
+// így a számlálót közvetlen API-hívásokkal sem lehet felpörgetni. A böngésző is csak 5 percenként kér növelést.
 (async function(){
-const $=id=>document.getElementById(id),out=$("visN"),API="https://abacus.jasoncameron.dev/",NS="seegame-kalkulator",KEY="visits",GAP=60000,BASE=132; // BASE: az eddigi oldal állása, ennél kevesebbet nem mutat
+const $=id=>document.getElementById(id),out=$("visN"),GAP=300000,
+  SB_URL="https://hmbarsvxcczubhunyuao.supabase.co",SB_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhtYmFyc3Z4Y2N6dWJodW55dWFvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM5NzQ0NjksImV4cCI6MjEwOTU1MDQ2OX0.Ra84lY8pvCBQVrv29zZsUZFpV6VBzII-3KmK6QFTM6E";
 let last=0;try{last=+localStorage.getItem("seerpg-vis-last")||0}catch(e){}
 const hit=Date.now()-last>=GAP;
 if(hit){try{localStorage.setItem("seerpg-vis-last",String(Date.now()))}catch(e){}}
-try{const r=await fetch(API+(hit?"hit/":"get/")+NS+"/"+KEY,{cache:"no-store"});
-  if(r.ok){const j=await r.json();if(typeof j.value==="number"&&j.value>=0)out.textContent=Math.max(BASE,j.value).toLocaleString("hu-HU")}}catch(e){}
+try{const r=await fetch(SB_URL+"/rest/v1/rpc/"+(hit?"visit_hit":"visit_get"),{method:"POST",headers:{"Content-Type":"application/json",apikey:SB_KEY,Authorization:"Bearer "+SB_KEY},body:"{}",cache:"no-store"});
+  if(r.ok){const v=+(await r.json());if(isFinite(v)&&v>=0)out.textContent=v.toLocaleString("hu-HU")}}catch(e){}
 })();
 
 // ===== Táblázat oldal: saját táblázat, a mentés ebben a böngészőben, csak a felhasználónak tárolódik =====
